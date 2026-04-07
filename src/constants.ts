@@ -70,45 +70,45 @@ export const STARTING_DECK: string[] = [
 
 export const THREAT_SCHEDULE: RoundThreats[] = [
   // Round 1
-  { threats: [{ timer: 3, sequence: [S.HP, S.MONEY] }] },
+  { threats: [{ timer: 3, hurdle: 2, sequence: [S.HP, S.MONEY] }] },
   // Round 2
   {
     threats: [
-      { timer: 3, sequence: [S.HP, S.HP, S.MONEY] },
-      { timer: 4, sequence: [S.HP, S.TIME, S.MONEY] },
+      { timer: 3, hurdle: 3, sequence: [S.HP, S.HP, S.MONEY] },
+      { timer: 4, hurdle: 3, sequence: [S.HP, S.TIME, S.MONEY] },
     ],
   },
   // Round 3
   {
     threats: [
-      { timer: 3, sequence: [S.HP, S.HP, S.HP] },
-      { timer: 3, sequence: [S.HP, S.TIME, S.MONEY, S.MONEY] },
+      { timer: 3, hurdle: 4, sequence: [S.HP, S.HP, S.HP] },
+      { timer: 3, hurdle: 3, sequence: [S.HP, S.TIME, S.MONEY, S.MONEY] },
     ],
   },
   // Round 4
   {
     threats: [
-      { timer: 2, sequence: [S.HP, S.HP] },
-      { timer: 3, sequence: [S.HP, S.HP, S.TIME, S.MONEY] },
-      { timer: 4, sequence: [S.HP, S.HP, S.HP, S.MONEY] },
+      { timer: 2, hurdle: 3, sequence: [S.HP, S.HP] },
+      { timer: 3, hurdle: 4, sequence: [S.HP, S.HP, S.TIME, S.MONEY] },
+      { timer: 4, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.MONEY] },
     ],
   },
   // Round 5
   {
     threats: [
-      { timer: 2, sequence: [S.HP, S.HP, S.HP] },
-      { timer: 3, sequence: [S.HP, S.HP, S.TIME, S.TIME] },
-      { timer: 4, sequence: [S.HP, S.HP, S.HP, S.MONEY, S.MONEY] },
+      { timer: 2, hurdle: 4, sequence: [S.HP, S.HP, S.HP] },
+      { timer: 3, hurdle: 5, sequence: [S.HP, S.HP, S.TIME, S.TIME] },
+      { timer: 4, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.MONEY, S.MONEY] },
     ],
   },
 ];
 
 export const BOSS_THREATS: RoundThreats = {
   threats: [
-    { timer: 2, sequence: [S.HP, S.HP, S.HP, S.HP] },
-    { timer: 2, sequence: [S.HP, S.HP, S.TIME, S.TIME] },
-    { timer: 3, sequence: [S.HP, S.HP, S.HP, S.HP, S.HP] },
-    { timer: 3, sequence: [S.HP, S.HP, S.HP, S.TIME, S.MONEY, S.MONEY] },
+    { timer: 2, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.HP] },
+    { timer: 2, hurdle: 4, sequence: [S.HP, S.HP, S.TIME, S.TIME] },
+    { timer: 3, hurdle: 6, sequence: [S.HP, S.HP, S.HP, S.HP, S.HP] },
+    { timer: 3, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.TIME, S.MONEY, S.MONEY] },
   ],
 };
 

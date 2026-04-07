@@ -115,7 +115,7 @@ export class GameEngine {
     }
 
     // Place threats
-    const roundIdx = s.isBoss ? THREAT_SCHEDULE.length : s.runRound - 1;
+    const roundIdx = s.isBoss ? s.threatSchedule.length - 1 : s.runRound - 1;
     placeThreatsForRound(s, roundIdx);
 
     this.startTurn();

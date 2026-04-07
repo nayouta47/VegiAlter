@@ -129,6 +129,22 @@ body {
   font-size: 12px;
 }
 
+.defense-icon {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 11px;
+  background: rgba(33, 150, 243, 0.7);
+  border-radius: 3px;
+  padding: 0 3px;
+}
+
+.cell--transplant-source {
+  border-color: #ff9800 !important;
+  background: #3a3020;
+  box-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
+}
+
 /* Threats */
 .threats {
   position: absolute;

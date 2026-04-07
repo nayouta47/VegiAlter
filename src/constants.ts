@@ -114,8 +114,8 @@ export const BOSS_THREATS: RoundThreats = {
 
 export const INITIAL_FARMER_HP = 5;
 export const INITIAL_TIME_TOKENS = 5;
-export const INITIAL_GRID_ROWS = 3;
-export const INITIAL_GRID_COLS = 3;
+export const INITIAL_GRID_ROWS = 2;
+export const INITIAL_GRID_COLS = 2;
 export const WATER_PER_TURN = 3;
 export const CARDS_PER_DRAW = 5;
 

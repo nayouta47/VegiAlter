@@ -42,6 +42,7 @@ export function placePlant(
     growthStack: 0,
     fullStack: def.fullStack,
     stunned: false,
+    defense: 0,
   };
   cell.plant = plant;
   return true;

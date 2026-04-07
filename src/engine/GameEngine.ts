@@ -24,7 +24,7 @@ import {
   roundReset,
   addCardToDeck,
 } from "./DeckManager";
-import { clearGrid, createGrid, getAdjacentCells, placePlant } from "./GridManager";
+import { autoExpandGrid, clearGrid, createGrid, getAdjacentCells, placePlant } from "./GridManager";
 import { allThreatsFired, placeThreatsForRound } from "./ThreatResolver";
 import { resolveTurnEnd } from "./TurnResolver";
 import { generateShop } from "./ShopManager";

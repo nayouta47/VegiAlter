@@ -31,12 +31,6 @@ export function generateShop(state: GameState): void {
       };
     }),
     {
-      type: ShopItemType.EXPAND,
-      cost: SHOP_EXPAND_COST,
-      label: "밭 확장 +1칸",
-      emoji: "🔲",
-    },
-    {
       type: ShopItemType.HEAL,
       cost: SHOP_HEAL_COST,
       label: "체력 회복 +1",

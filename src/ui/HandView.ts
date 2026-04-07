@@ -1,4 +1,4 @@
-import { GameState } from "../types";
+import { CardType, GameState } from "../types";
 import { CARD_DEFS } from "../constants";
 
 export function renderHand(state: GameState): string {

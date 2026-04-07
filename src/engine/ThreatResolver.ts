@@ -57,19 +57,54 @@ export function fireThreats(state: GameState): boolean {
         threat.fired = true;
         anyFired = true;
 
-        state.log.push(`위협 발동 (${r},${c})!`);
-        let plantDied = cell.plant === null;
-
-        for (const elem of threat.sequence) {
-          if (!plantDied && cell.plant) {
-            // Process against plant
-            processElementOnPlant(state, cell.plant, elem, r, c);
-            if (cell.plant.hp <= 0) {
-              plantDied = true;
-              killPlant(state, r, c);
+        // Reveal hurdle and sequence
+        const seqStr = threat.sequence
+          .map((s) => {
+            switch (s) {
+              case SequenceElement.HP: return "⚔️";
+              case SequenceElement.TIME: return "⏰";
+              case SequenceElement.MONEY: return "💰";
             }
+          })
+          .join("");
+        state.log.push(`위협 발동 (${r},${c})! 허들:${threat.hurdle} 시퀀스:${seqStr}`);
+
+        if (cell.plant) {
+          const total = cell.plant.hp + cell.plant.defense;
+          if (total >= threat.hurdle) {
+            // Hurdle SUCCESS: negate HP/TIME, earn MONEY
+            state.log.push(`  허들 성공! (HP:${cell.plant.hp} + 방어:${cell.plant.defense} = ${total} >= ${threat.hurdle})`);
+            for (const elem of threat.sequence) {
+              if (elem === SequenceElement.MONEY) {
+                state.gold += 1;
+                state.log.push(`  골드 +1 (총 ${state.gold})`);
+              }
+            }
+            cell.plant.defense = 0;
           } else {
-            // Process against farmer
+            // Hurdle FAILURE: apply sequence normally
+            state.log.push(`  허들 실패! (HP:${cell.plant.hp} + 방어:${cell.plant.defense} = ${total} < ${threat.hurdle})`);
+            let plantDied = false;
+            for (const elem of threat.sequence) {
+              if (!plantDied && cell.plant) {
+                processElementOnPlant(state, cell.plant, elem, r, c);
+                if (cell.plant.hp <= 0) {
+                  plantDied = true;
+                  killPlant(state, r, c);
+                }
+              } else {
+                processElementOnFarmer(state, elem);
+              }
+            }
+            // Reset defense if plant survived
+            if (cell.plant) {
+              cell.plant.defense = 0;
+            }
+          }
+        } else {
+          // Empty cell: auto-failure, all elements hit farmer
+          state.log.push(`  빈 칸 — 전부 농부에게!`);
+          for (const elem of threat.sequence) {
             processElementOnFarmer(state, elem);
           }
         }

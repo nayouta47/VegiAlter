@@ -113,3 +113,11 @@ export function expandGrid(state: GameState, direction: "top" | "bottom" | "left
     }
   }
 }
+
+export function autoExpandGrid(state: GameState): void {
+  if (state.gridRows <= state.gridCols) {
+    expandGrid(state, "bottom");
+  } else {
+    expandGrid(state, "right");
+  }
+}

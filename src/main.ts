@@ -1,3 +1,4 @@
+// VegiAlter
 import { GameEngine } from "./engine/GameEngine";
 import { render } from "./ui/Renderer";
 import { buyFreePick, buyGoldItem } from "./engine/ShopManager";

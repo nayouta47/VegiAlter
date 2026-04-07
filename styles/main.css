@@ -412,3 +412,34 @@ body {
   display: block;
   margin: 0 auto;
 }
+
+/* Drag & Drop */
+.card.dragging {
+  opacity: 0.4;
+}
+
+.cell--drag-over {
+  border-color: #64b5f6 !important;
+  background: #2a2a5a !important;
+  box-shadow: 0 0 12px rgba(100, 181, 246, 0.4);
+}
+
+.drag-preview {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.drag-preview--effect {
+  font-size: 14px;
+  font-weight: bold;
+  color: #66bb6a;
+  background: rgba(102, 187, 106, 0.3);
+  border-radius: 50%;
+  padding: 4px 8px;
+}

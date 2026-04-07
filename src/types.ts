@@ -11,6 +11,8 @@ export enum GamePhase {
 
 export enum CardType {
   VEGETABLE = "VEGETABLE",
+  WATERING = "WATERING",
+  TRANSPLANT = "TRANSPLANT",
   TOOL = "TOOL",
 }
 

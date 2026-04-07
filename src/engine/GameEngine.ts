@@ -174,6 +174,7 @@ export class GameEngine {
       }
     }
 
+    s.transplantSourceCell = null;
     s.selectedCardIndex = handIndex;
     this.render();
   }

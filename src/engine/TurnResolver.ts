@@ -48,18 +48,15 @@ function resolveFullStack(state: GameState): void {
     }
   }
 
-  // Apply heals for all full-stack plants
+  // Apply defense +1 for all full-stack plants (self + adjacent 4)
   for (const pos of fullStackCells) {
     const adjacents = getAdjacentCells(state, pos.row, pos.col, true);
     for (const adj of adjacents) {
       if (adj.plant) {
-        const before = adj.plant.hp;
-        adj.plant.hp = Math.min(adj.plant.hp + 1, adj.plant.maxHp);
-        if (adj.plant.hp > before) {
-          state.log.push(
-            `풀스택(${pos.row},${pos.col}) → 식물(${adj.row},${adj.col}) 힐 ${before}→${adj.plant.hp}`
-          );
-        }
+        adj.plant.defense += 1;
+        state.log.push(
+          `풀스택(${pos.row},${pos.col}) → 식물(${adj.row},${adj.col}) 방어+1 (총 ${adj.plant.defense})`
+        );
       }
     }
   }

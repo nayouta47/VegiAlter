@@ -6,7 +6,7 @@ export function renderGrid(state: GameState): string {
     state.selectedCardIndex !== null ? state.hand[state.selectedCardIndex] : null;
   const selectedDef = selectedCard ? CARD_DEFS[selectedCard.defId] : null;
 
-  let html = `<div class="grid" style="grid-template-columns: repeat(${state.gridCols}, 1fr);">`;
+  let html = `<div class="grid" style="grid-template-columns: repeat(${state.gridCols}, auto);">`;
 
   for (let r = 0; r < state.gridRows; r++) {
     for (let c = 0; c < state.gridCols; c++) {

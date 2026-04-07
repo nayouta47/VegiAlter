@@ -125,6 +125,8 @@ export const SHOP_HEAL_COST = 2;
 export const SHOP_CARD_POOL: { defId: string; cost: number }[] = [
   { defId: "bean", cost: 2 },
   { defId: "garlic", cost: 3 },
+  { defId: "watering", cost: 1 },
+  { defId: "transplant", cost: 1 },
   { defId: "watering_can", cost: 3 },
   { defId: "rain_stick", cost: 2 },
 ];

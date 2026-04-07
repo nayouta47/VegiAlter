@@ -66,7 +66,7 @@ export class GameEngine {
       timeTokens: INITIAL_TIME_TOKENS,
       gold: 0,
 
-      threatSchedule: [...THREAT_SCHEDULE, BOSS_THREATS],
+      threatSchedule: loadCustomThreats() ?? [...THREAT_SCHEDULE, BOSS_THREATS],
       maxTimerThisRound: 0,
 
       shopChoices: [],

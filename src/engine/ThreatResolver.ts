@@ -23,6 +23,7 @@ export function placeThreatsForRound(state: GameState, roundIndex: number): void
     const threat: Threat = {
       id: state.nextThreatId++,
       timer: t.timer,
+      hurdle: t.hurdle,
       sequence: [...t.sequence],
       fired: false,
     };

@@ -312,3 +312,13 @@ export class GameEngine {
     this.startRound();
   }
 }
+
+function loadCustomThreats(): RoundThreats[] | null {
+  try {
+    const saved = localStorage.getItem("vegialter_custom_threats");
+    if (!saved) return null;
+    return JSON.parse(saved).map((r: any) => ({ threats: r.threats }));
+  } catch {
+    return null;
+  }
+}

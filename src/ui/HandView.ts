@@ -20,8 +20,12 @@ export function renderHand(state: GameState): string {
     if (isDummy) cardClass += " card--dummy";
 
     let statsHtml = "";
-    if (def.hp !== undefined) {
+    if (def.type === CardType.VEGETABLE && def.hp !== undefined) {
       statsHtml = `<div class="card-stats">HP:${def.hp} 성장:${def.fullStack}</div>`;
+    } else if (def.type === CardType.WATERING) {
+      statsHtml = `<div class="card-stats">식물 1개 성장+1</div>`;
+    } else if (def.type === CardType.TRANSPLANT) {
+      statsHtml = `<div class="card-stats">식물 이동</div>`;
     }
 
     html += `

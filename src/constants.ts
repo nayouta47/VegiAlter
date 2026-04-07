@@ -56,7 +56,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     id: "transplant",
     name: "옮겨심기",
     type: CardType.TRANSPLANT,
-    cost: 0,
+    cost: 1,
     emoji: "🔀",
   },
 };

@@ -29,7 +29,7 @@ export function renderHand(state: GameState): string {
     }
 
     html += `
-      <div class="${cardClass}" data-hand-index="${i}">
+      <div class="${cardClass}" data-hand-index="${i}"${!isDummy && canAfford ? ' draggable="true"' : ''}>
         <div class="card-emoji">${isDummy ? "💀" : def.emoji}</div>
         <div class="card-name">${def.name}</div>
         <div class="card-cost">💧${def.cost}</div>

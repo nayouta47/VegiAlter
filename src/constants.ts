@@ -45,6 +45,20 @@ export const CARD_DEFS: Record<string, CardDef> = {
     toolEffect: ToolEffect.WATER_DROP,
     emoji: "💧",
   },
+  watering: {
+    id: "watering",
+    name: "물주기",
+    type: CardType.WATERING,
+    cost: 1,
+    emoji: "💦",
+  },
+  transplant: {
+    id: "transplant",
+    name: "옮겨심기",
+    type: CardType.TRANSPLANT,
+    cost: 0,
+    emoji: "🔀",
+  },
 };
 
 export const STARTING_DECK: string[] = [

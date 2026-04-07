@@ -79,7 +79,7 @@ export interface Cell {
 }
 
 export interface RoundThreats {
-  threats: { timer: number; sequence: SequenceElement[] }[];
+  threats: { timer: number; hurdle: number; sequence: SequenceElement[] }[];
 }
 
 export interface ShopItem {

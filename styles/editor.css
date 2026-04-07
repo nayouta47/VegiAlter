@@ -1,0 +1,149 @@
+.editor {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.editor h1 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.editor-nav {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.editor-nav a {
+  color: #64b5f6;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.editor-nav a:hover {
+  text-decoration: underline;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.editor-round {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.editor-round-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.editor-round-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.editor-threat {
+  background: #2a2a4a;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.editor-threat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.editor-threat-fields {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.editor-threat-fields label {
+  font-size: 14px;
+}
+
+.editor-input {
+  width: 60px;
+  padding: 4px 8px;
+  background: #1a1a2e;
+  border: 1px solid #4a4a6a;
+  border-radius: 4px;
+  color: #eee;
+  font-size: 14px;
+}
+
+.editor-sequence {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-size: 14px;
+}
+
+.seq-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: opacity 0.15s;
+}
+
+.seq-badge:hover {
+  opacity: 0.5;
+}
+
+.seq-badge--hp {
+  background: rgba(239, 83, 80, 0.3);
+}
+
+.seq-badge--time {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.seq-badge--money {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.btn-small {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #fff;
+  transition: opacity 0.15s;
+}
+
+.btn-small:hover {
+  opacity: 0.8;
+}
+
+.btn-small--add {
+  background: #1565c0;
+}
+
+.btn-small--remove {
+  background: #c62828;
+}
+
+.btn-small--seq {
+  background: #37474f;
+}

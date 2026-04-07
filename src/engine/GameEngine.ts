@@ -73,6 +73,7 @@ export class GameEngine {
       freePickUsed: false,
 
       selectedCardIndex: null,
+      transplantSourceCell: null,
 
       nextInstanceId: 1,
       nextThreatId: 1,

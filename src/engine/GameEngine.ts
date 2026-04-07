@@ -94,7 +94,8 @@ export class GameEngine {
     s.log = [];
 
     // Check if boss round
-    if (s.runRound > THREAT_SCHEDULE.length || s.timeTokens <= 0) {
+    const normalRoundCount = s.threatSchedule.length - 1;
+    if (s.runRound > normalRoundCount || s.timeTokens <= 0) {
       s.isBoss = true;
       s.log.push("=== 보스전! ===");
     } else {

@@ -30,6 +30,9 @@ export function renderGrid(state: GameState): string {
         const hpBar = renderMiniBar(cell.plant.hp, cell.plant.maxHp, "hp");
         const growthBar = renderMiniBar(cell.plant.growthStack, cell.plant.fullStack, "growth");
         const stunIcon = cell.plant.stunned ? '<span class="stun-icon">💤</span>' : "";
+        const defenseIcon = cell.plant.defense > 0
+          ? `<span class="defense-icon">🛡️${cell.plant.defense}</span>`
+          : "";
         html += `
           <div class="plant">
             <div class="plant-emoji">${pDef.emoji}</div>
@@ -37,6 +40,7 @@ export function renderGrid(state: GameState): string {
               ${hpBar} ${growthBar}
             </div>
             ${stunIcon}
+            ${defenseIcon}
           </div>
         `;
       }

@@ -1,5 +1,5 @@
 import { GameState, ShopItemType } from "../types";
-import { CARD_DEFS, SHOP_CARD_POOL, SHOP_EXPAND_COST, SHOP_HEAL_COST } from "../constants";
+import { CARD_DEFS, SHOP_CARD_POOL, SHOP_HEAL_COST } from "../constants";
 import { shuffle } from "../utils/random";
 import { addCardToDeck } from "./DeckManager";
 import { expandGrid } from "./GridManager";

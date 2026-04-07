@@ -62,10 +62,10 @@ export const CARD_DEFS: Record<string, CardDef> = {
 };
 
 export const STARTING_DECK: string[] = [
-  ...Array(7).fill("bean"),
-  ...Array(3).fill("garlic"),
-  "watering_can",
-  "rain_stick",
+  ...Array(2).fill("bean"),
+  "garlic",
+  ...Array(4).fill("watering"),
+  ...Array(5).fill("transplant"),
 ];
 
 export const THREAT_SCHEDULE: RoundThreats[] = [

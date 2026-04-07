@@ -60,11 +60,13 @@ export interface Plant {
   growthStack: number;
   fullStack: number;
   stunned: boolean;
+  defense: number;
 }
 
 export interface Threat {
   id: number;
   timer: number;
+  hurdle: number;
   sequence: SequenceElement[];
   fired: boolean;
 }

@@ -36,21 +36,12 @@ export function renderGrid(state: GameState): string {
         `;
       }
 
-      // Threats
+      // Threats (timer only — hurdle and sequence are hidden until fired)
       if (cell.threats.length > 0) {
         html += `<div class="threats">`;
         for (const threat of cell.threats) {
           if (threat.fired) continue;
-          const seqIcons = threat.sequence
-            .map((s) => {
-              switch (s) {
-                case SequenceElement.HP: return "⚔️";
-                case SequenceElement.TIME: return "⏰";
-                case SequenceElement.MONEY: return "💰";
-              }
-            })
-            .join("");
-          html += `<div class="threat-badge">⏱️${threat.timer} ${seqIcons}</div>`;
+          html += `<div class="threat-badge">⏱️${threat.timer}</div>`;
         }
         html += `</div>`;
       }

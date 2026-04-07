@@ -1,0 +1,15 @@
+import { GameState } from "../types";
+
+export function renderHud(state: GameState): string {
+  const bossLabel = state.isBoss ? " [BOSS]" : "";
+  return `
+    <div class="hud">
+      <div class="hud-item">❤️ ${state.farmerHp}/${state.farmerMaxHp}</div>
+      <div class="hud-item">💧 ${state.water}</div>
+      <div class="hud-item">🪙 ${state.gold}</div>
+      <div class="hud-item">⏳ ${state.timeTokens}</div>
+      <div class="hud-item">📋 라운드 ${state.runRound}${bossLabel} / 턴 ${state.turnInRound}</div>
+      <div class="hud-item">🃏 덱 ${state.deck.length} | 버림 ${state.discard.length}</div>
+    </div>
+  `;
+}

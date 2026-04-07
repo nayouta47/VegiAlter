@@ -1,0 +1,49 @@
+import { GameState } from "../types";
+
+export function renderShop(state: GameState): string {
+  let html = `<div class="shop">`;
+  html += `<h2 class="shop-title">상점</h2>`;
+  html += `<div class="shop-gold">🪙 보유 골드: ${state.gold}</div>`;
+
+  // Free pick
+  if (!state.freePickUsed) {
+    html += `<div class="shop-section">`;
+    html += `<h3>무료 선택 (1개 선택)</h3>`;
+    html += `<div class="shop-items">`;
+    for (let i = 0; i < state.shopChoices.length; i++) {
+      const item = state.shopChoices[i];
+      html += `
+        <div class="shop-item shop-item--free" data-free-index="${i}">
+          <div class="shop-item-emoji">${item.emoji}</div>
+          <div class="shop-item-label">${item.label}</div>
+          <div class="shop-item-cost">무료</div>
+        </div>
+      `;
+    }
+    html += `</div></div>`;
+  } else {
+    html += `<div class="shop-section"><p class="shop-picked">무료 선택 완료!</p></div>`;
+  }
+
+  // Gold purchases
+  html += `<div class="shop-section">`;
+  html += `<h3>골드 구매</h3>`;
+  html += `<div class="shop-items">`;
+  for (let i = 0; i < state.shopGoldItems.length; i++) {
+    const item = state.shopGoldItems[i];
+    const canAfford = state.gold >= item.cost;
+    const itemClass = canAfford ? "shop-item" : "shop-item shop-item--disabled";
+    html += `
+      <div class="${itemClass}" data-gold-index="${i}">
+        <div class="shop-item-emoji">${item.emoji}</div>
+        <div class="shop-item-label">${item.label}</div>
+        <div class="shop-item-cost">🪙${item.cost}</div>
+      </div>
+    `;
+  }
+  html += `</div></div>`;
+
+  html += `<button class="btn btn--primary" id="btn-leave-shop">다음 라운드 →</button>`;
+  html += `</div>`;
+  return html;
+}

@@ -75,6 +75,16 @@ function getIsValidTarget(
   if (selectedDef.type === CardType.VEGETABLE) {
     return cell.plant === null;
   }
+  if (selectedDef.type === CardType.WATERING) {
+    return cell.plant !== null;
+  }
+  if (selectedDef.type === CardType.TRANSPLANT) {
+    if (state.transplantSourceCell === null) {
+      return cell.plant !== null; // Step 1: select source
+    } else {
+      return cell.plant === null; // Step 2: select destination
+    }
+  }
   if (selectedDef.toolEffect === ToolEffect.WATERING_CAN) {
     return true; // Can target any cell
   }

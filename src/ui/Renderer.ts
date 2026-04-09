@@ -51,5 +51,9 @@ export function render(state: GameState, container: HTMLElement, codexOpen = fal
       break;
   }
 
+  if (codexOpen) {
+    html += renderCodex();
+  }
+
   container.innerHTML = html;
 }

@@ -61,7 +61,10 @@ function bindEvents(): void {
       if (engine.state.phase === GamePhase.ACTION && engine.state.selectedCardIndex === null) {
         const cell = engine.state.grid[row][col];
         if (cell.plant && cell.plant.growthStack >= cell.plant.fullStack) {
+          const goldGain = cell.plant.fullStack;
+          const emoji = CARD_DEFS[cell.plant.defId].emoji;
           engine.harvestPlant(row, col);
+          showFloatingText(el, `${emoji} 🪙+${goldGain}`);
           return;
         }
       }

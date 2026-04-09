@@ -191,6 +191,32 @@ export class GameEngine {
     this.render();
   }
 
+  harvestPlant(row: number, col: number): void {
+    const s = this.state;
+    if (s.phase !== GamePhase.ACTION) return;
+
+    const cell = s.grid[row][col];
+    if (!cell.plant || cell.plant.growthStack < cell.plant.fullStack) return;
+
+    const plant = cell.plant;
+    const def = CARD_DEFS[plant.defId];
+    const goldGain = plant.fullStack;
+
+    s.gold += goldGain;
+    s.log.push(`${def.emoji} 수확! 골드 +${goldGain} (총 ${s.gold})`);
+
+    // Return card to discard (usable, not dummy)
+    s.discard.push({
+      instanceId: plant.cardInstanceId,
+      defId: plant.defId,
+      isDummy: false,
+      isTemp: false,
+    });
+
+    cell.plant = null;
+    this.render();
+  }
+
   playCardOnCell(row: number, col: number): void {
     const s = this.state;
     if (s.phase !== GamePhase.ACTION || s.selectedCardIndex === null) return;

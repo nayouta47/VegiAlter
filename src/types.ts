@@ -80,14 +80,13 @@ export interface Cell {
 }
 
 export interface PendingThreat {
-  timer: number;
   hurdle: number;
   sequence: SequenceElement[];
   appearOnTurn: number;
 }
 
 export interface RoundThreats {
-  threats: { timer: number; hurdle: number; sequence: SequenceElement[] }[];
+  threats: { appearOnTurn: number; hurdle: number; sequence: SequenceElement[] }[];
 }
 
 export interface ShopItem {

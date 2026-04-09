@@ -79,6 +79,24 @@ body {
   background: #2a3a2e;
 }
 
+.cell--harvestable {
+  border-color: #ffd54f !important;
+  animation: harvest-pulse 1.2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+@keyframes harvest-pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(255, 213, 79, 0.3); }
+  50% { box-shadow: 0 0 14px rgba(255, 213, 79, 0.6); }
+}
+
+.harvest-icon {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 14px;
+}
+
 /* Plant */
 .plant {
   display: flex;

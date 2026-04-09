@@ -20,8 +20,12 @@ export function renderHand(state: GameState): string {
     if (isDummy) cardClass += " card--dummy";
 
     let statsHtml = "";
+    let cornerHtml = "";
     if (def.type === CardType.VEGETABLE && def.hp !== undefined) {
-      statsHtml = `<div class="card-stats">HP:${def.hp} 성장:${def.fullStack}</div>`;
+      cornerHtml = `
+        <div class="card-corner card-corner--hp">❤️${def.hp}</div>
+        <div class="card-corner card-corner--growth">🌱${def.fullStack}</div>
+      `;
     } else if (def.type === CardType.WATERING) {
       statsHtml = `<div class="card-stats">식물 1개 성장+1</div>`;
     } else if (def.type === CardType.TRANSPLANT) {
@@ -31,6 +35,7 @@ export function renderHand(state: GameState): string {
     const tooltipText = def.description || "";
     html += `
       <div class="${cardClass}" data-hand-index="${i}"${!isDummy && canAfford ? ' draggable="true"' : ''}>
+        ${!isDummy ? cornerHtml : ""}
         <div class="card-emoji">${isDummy ? "💀" : def.emoji}</div>
         <div class="card-name">${def.name}</div>
         <div class="card-cost">💧${def.cost}</div>

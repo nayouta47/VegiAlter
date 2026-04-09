@@ -110,9 +110,31 @@ body {
   background: transparent;
 }
 
+.pip--hp {
+  border-radius: 0;
+  border: none;
+  width: 10px;
+  height: 9px;
+  position: relative;
+  background: transparent;
+}
+
+.pip--hp::before {
+  content: "\2665";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  font-size: 11px;
+  line-height: 1;
+  color: #666;
+}
+
+.pip--hp.filled::before {
+  color: #ef5350;
+}
+
 .pip--hp.filled {
-  background: #ef5350;
-  border-color: #ef5350;
+  background: transparent;
 }
 
 .pip--growth.filled {

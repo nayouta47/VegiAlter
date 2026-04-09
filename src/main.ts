@@ -56,6 +56,15 @@ function bindEvents(): void {
       const row = parseInt(el.dataset.row!);
       const col = parseInt(el.dataset.col!);
 
+      // Harvest fully grown plant (no card selected)
+      if (engine.state.phase === GamePhase.ACTION && engine.state.selectedCardIndex === null) {
+        const cell = engine.state.grid[row][col];
+        if (cell.plant && cell.plant.growthStack >= cell.plant.fullStack) {
+          engine.harvestPlant(row, col);
+          return;
+        }
+      }
+
       if (engine.state.selectedCardIndex !== null && transplantEdge) {
         const card = engine.state.hand[engine.state.selectedCardIndex];
         if (card && CARD_DEFS[card.defId].type === CardType.TRANSPLANT) {

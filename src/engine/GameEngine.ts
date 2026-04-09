@@ -110,12 +110,6 @@ export class GameEngine {
     // Clear grid plants (threats are cleared too)
     clearGrid(s);
 
-    // Auto-expand grid (skip round 1)
-    if (s.runRound > 1 && !s.isBoss) {
-      autoExpandGrid(s);
-      s.log.push(`밭 확장! (${s.gridRows}x${s.gridCols})`);
-    }
-
     // Place threats
     const roundIdx = s.isBoss ? s.threatSchedule.length - 1 : s.runRound - 1;
     placeThreatsForRound(s, roundIdx);

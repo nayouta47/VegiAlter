@@ -409,6 +409,7 @@ body {
   text-align: center;
   cursor: pointer;
   transition: all 0.15s;
+  position: relative;
 }
 
 .shop-item:hover {

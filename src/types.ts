@@ -135,6 +135,8 @@ export interface GameState {
 
   selectedCardIndex: number | null;
   roundRewards: RoundRewards | null;
+  currentPhase: number;
+  waitingForManualRoundEnd: boolean;
 
   nextInstanceId: number;
   nextThreatId: number;

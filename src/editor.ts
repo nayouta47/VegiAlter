@@ -94,7 +94,7 @@ function renderEditor(): void {
         <button class="btn-small btn-small--remove" data-remove-threat="${ri}-${ti}">삭제</button>
       </div>`;
       html += `<div class="editor-threat-fields">
-        <label>타이머: <input type="number" min="1" max="10" value="${threat.timer}" data-field="timer" data-threat="${ri}-${ti}" class="editor-input"></label>
+        <label>등장 턴: <input type="number" min="1" max="20" value="${threat.appearOnTurn}" data-field="appearOnTurn" data-threat="${ri}-${ti}" class="editor-input"></label>
         <label>허들: <input type="number" min="1" max="20" value="${threat.hurdle}" data-field="hurdle" data-threat="${ri}-${ti}" class="editor-input"></label>
       </div>`;
       html += `<div class="editor-sequence"><span>시퀀스: </span>`;

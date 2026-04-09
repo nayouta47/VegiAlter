@@ -129,6 +129,7 @@ export interface GameState {
 
   threatSchedule: RoundThreats[];
   maxTimerThisRound: number;
+  pendingThreats: PendingThreat[];
 
   shopChoices: ShopItem[];
   shopGoldItems: ShopItem[];

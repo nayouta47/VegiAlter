@@ -138,7 +138,6 @@ export class GameEngine {
 
     if (s.selectedCardIndex === handIndex) {
       s.selectedCardIndex = null;
-      s.transplantSourceCell = null;
       this.render();
       return;
     }

@@ -28,12 +28,14 @@ export function renderHand(state: GameState): string {
       statsHtml = `<div class="card-stats">식물 이동</div>`;
     }
 
+    const tooltipText = def.description || "";
     html += `
       <div class="${cardClass}" data-hand-index="${i}"${!isDummy && canAfford ? ' draggable="true"' : ''}>
         <div class="card-emoji">${isDummy ? "💀" : def.emoji}</div>
         <div class="card-name">${def.name}</div>
         <div class="card-cost">💧${def.cost}</div>
         ${isDummy ? '<div class="card-dummy-label">사용 불가</div>' : statsHtml}
+        ${!isDummy && tooltipText ? `<div class="card-tooltip">${tooltipText}</div>` : ""}
       </div>
     `;
   }

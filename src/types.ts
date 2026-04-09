@@ -91,6 +91,15 @@ export interface ShopItem {
   emoji: string;
 }
 
+export interface RoundRewards {
+  goldClaimed: boolean;
+  cardClaimed: boolean;
+  expandClaimed: boolean;
+  cardChoices: string[];
+  cardPending: boolean;
+  expandPending: boolean;
+}
+
 export interface GameState {
   phase: GamePhase;
   runRound: number;

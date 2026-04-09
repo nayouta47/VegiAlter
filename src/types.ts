@@ -79,6 +79,13 @@ export interface Cell {
   threats: Threat[];
 }
 
+export interface PendingThreat {
+  timer: number;
+  hurdle: number;
+  sequence: SequenceElement[];
+  appearOnTurn: number;
+}
+
 export interface RoundThreats {
   threats: { timer: number; hurdle: number; sequence: SequenceElement[] }[];
 }

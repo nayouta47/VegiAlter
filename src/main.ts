@@ -193,6 +193,11 @@ function bindEvents(): void {
     engine.endTurn();
   });
 
+  // End round (manual, after harvesting)
+  document.getElementById("btn-end-round")?.addEventListener("click", () => {
+    engine.confirmRoundEnd();
+  });
+
   // Rewards
   app.querySelector("[data-reward='gold']")?.addEventListener("click", () => {
     engine.claimRewardGold();

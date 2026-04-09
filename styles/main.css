@@ -35,6 +35,26 @@ body {
   white-space: nowrap;
 }
 
+.hud-item--right {
+  margin-left: auto;
+}
+
+.btn-codex {
+  background: #2a2a4a;
+  border: 1px solid #5a5a8a;
+  color: #eee;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-codex:hover {
+  background: #3a3a5a;
+  border-color: #7a7aaa;
+}
+
 /* Grid */
 .grid {
   display: grid;

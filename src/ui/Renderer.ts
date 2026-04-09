@@ -17,9 +17,15 @@ export function render(state: GameState, container: HTMLElement, codexOpen = fal
     case GamePhase.TURN_END:
       html += renderGrid(state);
       html += renderHand(state);
-      html += `<div class="actions">
-        <button class="btn btn--end-turn" id="btn-end-turn">턴 종료 🌧️ 전체 성장+1</button>
-      </div>`;
+      if (state.waitingForManualRoundEnd) {
+        html += `<div class="actions">
+          <button class="btn btn--end-round" id="btn-end-round">라운드 종료 🏁</button>
+        </div>`;
+      } else {
+        html += `<div class="actions">
+          <button class="btn btn--end-turn" id="btn-end-turn">턴 종료 🌧️ 전체 성장+1</button>
+        </div>`;
+      }
       html += renderLog(state);
       break;
 

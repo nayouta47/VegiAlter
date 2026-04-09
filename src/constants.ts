@@ -21,7 +21,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     hp: 3,
     fullStack: 3,
     emoji: "🧄",
-    description: "HP 3, 수확: 자신 방어+1",
+    description: "수확: 자신 방어+1",
   },
   watering_can: {
     id: "watering_can",

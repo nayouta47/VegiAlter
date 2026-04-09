@@ -16,6 +16,7 @@ export function renderGrid(state: GameState): string {
       let cellClass = "cell";
       if (isValidTarget) cellClass += " cell--valid";
       if (cell.plant) cellClass += " cell--planted";
+      if (cell.plant && cell.plant.growthStack >= cell.plant.fullStack) cellClass += " cell--harvestable";
 
       html += `<div class="${cellClass}" data-row="${r}" data-col="${c}">`;
 

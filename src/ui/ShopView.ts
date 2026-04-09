@@ -13,11 +13,13 @@ export function renderShop(state: GameState): string {
     html += `<div class="shop-items">`;
     for (let i = 0; i < state.shopChoices.length; i++) {
       const item = state.shopChoices[i];
+      const freeTooltip = getShopTooltip(item);
       html += `
         <div class="shop-item shop-item--free" data-free-index="${i}">
           <div class="shop-item-emoji">${item.emoji}</div>
           <div class="shop-item-label">${item.label}</div>
           <div class="shop-item-cost">무료</div>
+          ${freeTooltip ? `<div class="card-tooltip">${freeTooltip}</div>` : ""}
         </div>
       `;
     }

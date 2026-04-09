@@ -11,6 +11,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     hp: 1,
     fullStack: 3,
     emoji: "🫘",
+    description: "HP 1, 성장 3칸 채우면 수확",
   },
   garlic: {
     id: "garlic",
@@ -20,6 +21,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     hp: 3,
     fullStack: 3,
     emoji: "🧄",
+    description: "HP 3, 성장 3칸 채우면 수확",
   },
   watering_can: {
     id: "watering_can",
@@ -28,6 +30,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     cost: 2,
     toolEffect: ToolEffect.WATERING_CAN,
     emoji: "🚿",
+    description: "십자 범위(+) 식물 모두 성장+1",
   },
   rain_stick: {
     id: "rain_stick",
@@ -36,6 +39,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     cost: 0,
     toolEffect: ToolEffect.RAIN_STICK,
     emoji: "🎋",
+    description: "물방울 카드 2장을 덱에 추가",
   },
   water_drop: {
     id: "water_drop",
@@ -44,6 +48,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     cost: 0,
     toolEffect: ToolEffect.WATER_DROP,
     emoji: "💧",
+    description: "즉시 물 +1",
   },
   watering: {
     id: "watering",
@@ -51,6 +56,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     type: CardType.WATERING,
     cost: 1,
     emoji: "💦",
+    description: "선택한 식물에 성장+1",
   },
   transplant: {
     id: "transplant",
@@ -58,6 +64,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     type: CardType.TRANSPLANT,
     cost: 1,
     emoji: "🔀",
+    description: "인접한 두 칸의 식물을 교환",
   },
 };
 

@@ -62,7 +62,7 @@ export function buyGoldItem(
 ): boolean {
   if (index < 0 || index >= state.shopGoldItems.length) return false;
   const item = state.shopGoldItems[index];
-  if (state.gold < item.cost) return false;
+  if (item.sold || state.gold < item.cost) return false;
 
   state.gold -= item.cost;
 
@@ -84,5 +84,6 @@ export function buyGoldItem(
       }
       break;
   }
+  item.sold = true;
   return true;
 }

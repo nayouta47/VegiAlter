@@ -76,6 +76,7 @@ export class GameEngine {
       freePickUsed: false,
 
       selectedCardIndex: null,
+      roundRewards: null,
 
       nextInstanceId: 1,
       nextThreatId: 1,

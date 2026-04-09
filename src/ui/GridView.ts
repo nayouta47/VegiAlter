@@ -74,11 +74,15 @@ function getIsValidTarget(
     return cell.plant !== null;
   }
   if (selectedDef.type === CardType.TRANSPLANT) {
-    if (state.transplantSourceCell === null) {
-      return cell.plant !== null; // Step 1: select source
-    } else {
-      return cell.plant === null; // Step 2: select destination
+    if (cell.plant) return true;
+    const offsets: [number, number][] = [[-1,0],[1,0],[0,-1],[0,1]];
+    for (const [dr, dc] of offsets) {
+      const r2 = row + dr, c2 = col + dc;
+      if (r2 >= 0 && r2 < state.gridRows && c2 >= 0 && c2 < state.gridCols) {
+        if (state.grid[r2][c2].plant) return true;
+      }
     }
+    return false;
   }
   if (selectedDef.toolEffect === ToolEffect.WATERING_CAN) {
     return true; // Can target any cell

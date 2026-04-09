@@ -58,11 +58,8 @@ export function roundReset(state: GameState): void {
   // Gather all cards from hand, deck, discard
   const allCards = [...state.deck, ...state.hand, ...state.discard];
 
-  // Remove temp cards, clear dummy tags
+  // Remove temp cards (dummy tags persist — dead plants stay as seeds)
   const kept = allCards.filter((c) => !c.isTemp);
-  for (const c of kept) {
-    c.isDummy = false;
-  }
 
   state.deck = shuffle(kept);
   state.hand = [];

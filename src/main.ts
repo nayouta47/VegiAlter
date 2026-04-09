@@ -387,5 +387,20 @@ function showTransplantSwapPreview(edge: { rowA: number; colA: number; rowB: num
   if (plantA) addPreviewToCell(edge.rowB, edge.colB, CARD_DEFS[plantA.defId].emoji);
 }
 
+// F2 debug + Escape (registered once, outside bindEvents to avoid accumulation)
+document.addEventListener("keydown", (e) => {
+  if (e.key === "F2") {
+    console.log("GameState:", JSON.parse(JSON.stringify(engine.state)));
+  }
+  if (e.key === "Escape") {
+    if (engine.state.phase === GamePhase.ACTION) {
+      engine.state.selectedCardIndex = null;
+      transplantEdge = null;
+      clearDragPreview();
+      engine.render();
+    }
+  }
+});
+
 // Start the game
 engine.startRun();

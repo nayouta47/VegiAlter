@@ -294,8 +294,68 @@ export class GameEngine {
     this.startTurn();
   }
 
+  // --- Rewards ---
+
+  private initRoundRewards(): void {
+    const pool = shuffle(SHOP_CARD_POOL.map(p => p.defId));
+    this.state.roundRewards = {
+      goldClaimed: false,
+      cardClaimed: false,
+      expandClaimed: false,
+      cardChoices: pool.slice(0, 3),
+      cardPending: false,
+      expandPending: false,
+    };
+  }
+
+  claimRewardGold(): void {
+    const rw = this.state.roundRewards;
+    if (!rw || rw.goldClaimed) return;
+    this.state.gold += REWARD_GOLD;
+    rw.goldClaimed = true;
+    this.state.log.push(`보상: 골드 +${REWARD_GOLD}`);
+    this.render();
+  }
+
+  openRewardCard(): void {
+    const rw = this.state.roundRewards;
+    if (!rw || rw.cardClaimed) return;
+    rw.cardPending = true;
+    this.render();
+  }
+
+  claimRewardCard(defId: string): void {
+    const rw = this.state.roundRewards;
+    if (!rw || rw.cardClaimed) return;
+    addCardToDeck(this.state, defId);
+    rw.cardClaimed = true;
+    rw.cardPending = false;
+    const def = CARD_DEFS[defId];
+    this.state.log.push(`보상: ${def.emoji}${def.name} 획득`);
+    this.render();
+  }
+
+  openRewardExpand(): void {
+    const rw = this.state.roundRewards;
+    if (!rw || rw.expandClaimed) return;
+    rw.expandPending = true;
+    this.render();
+  }
+
+  claimRewardExpand(dir: "top" | "bottom" | "left" | "right"): void {
+    const rw = this.state.roundRewards;
+    if (!rw || rw.expandClaimed) return;
+    expandGrid(this.state, dir);
+    rw.expandClaimed = true;
+    rw.expandPending = false;
+    const dirLabel = { top: "위", bottom: "아래", left: "왼쪽", right: "오른쪽" }[dir];
+    this.state.log.push(`보상: 밭 확장 (${dirLabel}) → ${this.state.gridRows}x${this.state.gridCols}`);
+    this.render();
+  }
+
   enterShop(): void {
     const s = this.state;
+    s.roundRewards = null;
     generateShop(s);
     s.phase = GamePhase.SHOP;
     s.log = ["=== 상점 ==="];

@@ -7,21 +7,15 @@ export function placeThreatsForRound(state: GameState, roundIndex: number): void
     : state.threatSchedule[roundIndex];
   if (!schedule) return;
 
-  let maxTimer = 0;
   state.pendingThreats = [];
 
   for (const t of schedule.threats) {
-    const appearOnTurn = Math.max(1, t.timer - 2);
-    const placedTimer = Math.min(3, t.timer);
     state.pendingThreats.push({
-      timer: placedTimer,
       hurdle: t.hurdle,
       sequence: [...t.sequence],
-      appearOnTurn,
+      appearOnTurn: t.appearOnTurn,
     });
-    if (t.timer > maxTimer) maxTimer = t.timer;
   }
-  state.maxTimerThisRound = maxTimer;
 }
 
 export function placePendingThreats(state: GameState): void {

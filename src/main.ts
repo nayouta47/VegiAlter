@@ -55,6 +55,17 @@ function bindEvents(): void {
     el.addEventListener("click", () => {
       const row = parseInt(el.dataset.row!);
       const col = parseInt(el.dataset.col!);
+
+      if (engine.state.selectedCardIndex !== null && transplantEdge) {
+        const card = engine.state.hand[engine.state.selectedCardIndex];
+        if (card && CARD_DEFS[card.defId].type === CardType.TRANSPLANT) {
+          const edge = transplantEdge;
+          transplantEdge = null;
+          engine.playTransplantOnEdge(edge.rowA, edge.colA, edge.rowB, edge.colB);
+          return;
+        }
+      }
+
       engine.playCardOnCell(row, col);
     });
 
@@ -65,6 +76,23 @@ function bindEvents(): void {
       const card = engine.state.hand[dragCardIndex];
       if (!card) return;
       const def = CARD_DEFS[card.defId];
+
+      if (def.type === CardType.TRANSPLANT) {
+        const edge = detectTransplantEdge(el, e.clientX, e.clientY, row, col);
+        const edgeKey = edge ? `${edge.rowA},${edge.colA}-${edge.rowB},${edge.colB}` : null;
+        const curKey = transplantEdge ? `${transplantEdge.rowA},${transplantEdge.colA}-${transplantEdge.rowB},${transplantEdge.colB}` : null;
+        if (edgeKey !== curKey) {
+          clearDragPreview();
+          transplantEdge = edge;
+          if (edge) showTransplantSwapPreview(edge);
+        }
+        if (edge) {
+          e.preventDefault();
+          e.dataTransfer!.dropEffect = "move";
+        }
+        return;
+      }
+
       if (isDragValidTarget(row, col, def)) {
         e.preventDefault();
         e.dataTransfer!.dropEffect = "move";
@@ -73,15 +101,17 @@ function bindEvents(): void {
 
     el.addEventListener("dragenter", () => {
       if (dragCardIndex === null) return;
+      const card = engine.state.hand[dragCardIndex];
+      if (!card) return;
+      const def = CARD_DEFS[card.defId];
+      if (def.type === CardType.TRANSPLANT) return;
+
       const row = parseInt(el.dataset.row!);
       const col = parseInt(el.dataset.col!);
       const cellKey = `${row},${col}`;
       if (currentPreviewCell === cellKey) return;
       currentPreviewCell = cellKey;
       clearDragPreview();
-      const card = engine.state.hand[dragCardIndex];
-      if (!card) return;
-      const def = CARD_DEFS[card.defId];
       if (isDragValidTarget(row, col, def)) {
         showDragPreview(row, col, def);
       }
@@ -90,12 +120,58 @@ function bindEvents(): void {
     el.addEventListener("drop", (e) => {
       e.preventDefault();
       if (dragCardIndex === null) return;
+
+      const card = engine.state.hand[dragCardIndex];
+      if (card && CARD_DEFS[card.defId].type === CardType.TRANSPLANT) {
+        if (transplantEdge) {
+          const edge = transplantEdge;
+          engine.state.selectedCardIndex = dragCardIndex;
+          dragCardIndex = null;
+          clearDragUI();
+          engine.playTransplantOnEdge(edge.rowA, edge.colA, edge.rowB, edge.colB);
+        } else {
+          dragCardIndex = null;
+          clearDragUI();
+        }
+        return;
+      }
+
       const row = parseInt(el.dataset.row!);
       const col = parseInt(el.dataset.col!);
       engine.state.selectedCardIndex = dragCardIndex;
       dragCardIndex = null;
       clearDragUI();
       engine.playCardOnCell(row, col);
+    });
+
+    // Transplant edge detection on hover (click mode)
+    el.addEventListener("mousemove", (e) => {
+      if (dragCardIndex !== null) return;
+      if (engine.state.selectedCardIndex === null) return;
+      const card = engine.state.hand[engine.state.selectedCardIndex];
+      if (!card) return;
+      if (CARD_DEFS[card.defId].type !== CardType.TRANSPLANT) return;
+
+      const row = parseInt(el.dataset.row!);
+      const col = parseInt(el.dataset.col!);
+      const edge = detectTransplantEdge(el, e.clientX, e.clientY, row, col);
+      const edgeKey = edge ? `${edge.rowA},${edge.colA}-${edge.rowB},${edge.colB}` : null;
+      const curKey = transplantEdge ? `${transplantEdge.rowA},${transplantEdge.colA}-${transplantEdge.rowB},${transplantEdge.colB}` : null;
+      if (edgeKey !== curKey) {
+        clearDragPreview();
+        transplantEdge = edge;
+        if (edge) showTransplantSwapPreview(edge);
+      }
+    });
+
+    el.addEventListener("mouseleave", () => {
+      if (dragCardIndex !== null) return;
+      if (engine.state.selectedCardIndex === null) return;
+      const card = engine.state.hand[engine.state.selectedCardIndex];
+      if (!card) return;
+      if (CARD_DEFS[card.defId].type !== CardType.TRANSPLANT) return;
+      clearDragPreview();
+      transplantEdge = null;
     });
   });
 

@@ -23,11 +23,7 @@ export function render(state: GameState, container: HTMLElement): void {
       break;
 
     case GamePhase.ROUND_END:
-      html += renderGrid(state);
-      html += `<div class="overlay overlay--round-end">
-        <h2>라운드 ${state.runRound} 클리어!</h2>
-        <button class="btn btn--primary" id="btn-enter-shop">상점으로 →</button>
-      </div>`;
+      html += renderRewards(state);
       html += renderLog(state);
       break;
 

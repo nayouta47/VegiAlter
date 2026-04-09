@@ -285,6 +285,7 @@ export class GameEngine {
       }
       s.phase = GamePhase.ROUND_END;
       s.log.push("라운드 종료!");
+      this.initRoundRewards();
       this.render();
       return;
     }

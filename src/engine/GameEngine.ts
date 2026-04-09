@@ -412,7 +412,14 @@ function loadCustomThreats(): RoundThreats[] | null {
   try {
     const saved = localStorage.getItem("vegialter_custom_threats");
     if (!saved) return null;
-    return JSON.parse(saved).map((r: any) => ({ threats: r.threats }));
+    const parsed = JSON.parse(saved);
+    // Validate that data uses appearOnTurn format; discard legacy timer-based data
+    const first = parsed[0]?.threats?.[0];
+    if (first && !("appearOnTurn" in first)) {
+      localStorage.removeItem("vegialter_custom_threats");
+      return null;
+    }
+    return parsed.map((r: any) => ({ threats: r.threats }));
   } catch {
     return null;
   }

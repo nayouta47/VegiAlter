@@ -128,6 +128,7 @@ export interface GameState {
   freePickUsed: boolean;
 
   selectedCardIndex: number | null;
+  roundRewards: RoundRewards | null;
 
   nextInstanceId: number;
   nextThreatId: number;

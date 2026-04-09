@@ -82,11 +82,10 @@ export interface Cell {
 export interface PendingThreat {
   hurdle: number;
   sequence: SequenceElement[];
-  appearOnTurn: number;
 }
 
 export interface RoundThreats {
-  threats: { appearOnTurn: number; hurdle: number; sequence: SequenceElement[] }[];
+  phases: { hurdle: number; sequence: SequenceElement[] }[][];
 }
 
 export interface ShopItem {

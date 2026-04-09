@@ -228,7 +228,8 @@ function bindEvents(): void {
     if (e.key === "Escape") {
       if (engine.state.phase === GamePhase.ACTION) {
         engine.state.selectedCardIndex = null;
-        engine.state.transplantSourceCell = null;
+        transplantEdge = null;
+        clearDragPreview();
         engine.render();
       }
     }

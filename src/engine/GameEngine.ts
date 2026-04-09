@@ -236,7 +236,6 @@ export class GameEngine {
     if (s.phase !== GamePhase.ACTION) return;
 
     s.selectedCardIndex = null;
-    s.transplantSourceCell = null;
 
     // Discard remaining hand
     discardHand(s);

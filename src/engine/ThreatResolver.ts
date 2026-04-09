@@ -41,16 +41,27 @@ export function placePendingThreats(state: GameState): void {
       }
     }
   }
-  if (available.length === 0) return; // all cells full — drop threats
+
+  // All cells full — permanently skip all threats this turn
+  if (available.length === 0) {
+    for (const pt of toPlace) {
+      state.log.push(`위협 패스 (빈 칸 없음) — 허들:${pt.hurdle}`);
+    }
+    return;
+  }
 
   const shuffled = shuffle(available);
   for (let i = 0; i < toPlace.length; i++) {
-    if (i >= shuffled.length) break;
+    if (i >= shuffled.length) {
+      // No more cells — permanently skip remaining threats
+      state.log.push(`위협 패스 (빈 칸 없음) — 허들:${toPlace[i].hurdle}`);
+      continue;
+    }
     const pt = toPlace[i];
     const [row, col] = shuffled[i];
     state.grid[row][col].threats.push({
       id: state.nextThreatId++,
-      timer: pt.timer,
+      timer: 3,
       hurdle: pt.hurdle,
       sequence: [...pt.sequence],
       fired: false,

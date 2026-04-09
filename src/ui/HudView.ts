@@ -11,6 +11,7 @@ export function renderHud(state: GameState): string {
       <div class="hud-item">⏳ ${state.timeTokens}</div>
       <div class="hud-item">📋 라운드 ${state.runRound}${bossLabel} / 턴 ${state.turnInRound}</div>
       <div class="hud-item">🃏 덱 ${state.deck.length} | 버림 ${state.discard.length}</div>
+      <div class="hud-item hud-item--right"><button class="btn-codex" id="btn-codex">📖 도감</button></div>
     </div>
   `;
 }

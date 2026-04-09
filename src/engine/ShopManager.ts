@@ -15,6 +15,7 @@ export function generateShop(state: GameState): void {
       cost: 0,
       label: `${def.emoji} ${def.name}`,
       emoji: def.emoji,
+      sold: false,
     };
   });
 
@@ -28,6 +29,7 @@ export function generateShop(state: GameState): void {
         cost: item.cost,
         label: `${def.emoji} ${def.name}`,
         emoji: def.emoji,
+        sold: false,
       };
     }),
     {
@@ -35,6 +37,7 @@ export function generateShop(state: GameState): void {
       cost: SHOP_HEAL_COST,
       label: "체력 회복 +1",
       emoji: "❤️",
+      sold: false,
     },
   ];
 

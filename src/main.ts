@@ -412,6 +412,14 @@ function showTransplantSwapPreview(edge: { rowA: number; colA: number; rowB: num
   if (plantA) addPreviewToCell(edge.rowB, edge.colB, CARD_DEFS[plantA.defId].emoji);
 }
 
+function showFloatingText(cellEl: HTMLElement, text: string): void {
+  const floater = document.createElement("div");
+  floater.className = "floating-text";
+  floater.textContent = text;
+  cellEl.appendChild(floater);
+  floater.addEventListener("animationend", () => floater.remove());
+}
+
 // F2 debug + Escape (registered once, outside bindEvents to avoid accumulation)
 document.addEventListener("keydown", (e) => {
   if (e.key === "F2") {

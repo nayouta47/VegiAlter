@@ -252,20 +252,6 @@ function bindEvents(): void {
     engine.startRun();
   });
 
-  // F2 debug + Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "F2") {
-      console.log("GameState:", JSON.parse(JSON.stringify(engine.state)));
-    }
-    if (e.key === "Escape") {
-      if (engine.state.phase === GamePhase.ACTION) {
-        engine.state.selectedCardIndex = null;
-        transplantEdge = null;
-        clearDragPreview();
-        engine.render();
-      }
-    }
-  });
 }
 
 // --- Drag & Drop helpers ---

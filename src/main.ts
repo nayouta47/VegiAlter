@@ -44,7 +44,6 @@ function bindEvents(): void {
       clearDragUI();
       if (dragCardIndex !== null) {
         engine.state.selectedCardIndex = null;
-        engine.state.transplantSourceCell = null;
         dragCardIndex = null;
         engine.render();
       }

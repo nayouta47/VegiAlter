@@ -125,6 +125,19 @@ export class GameEngine {
     s.selectedCardIndex = null;
 
     drawCards(s, CARDS_PER_DRAW);
+
+    // First turn mulligan: redraw if no vegetables
+    if (s.turnInRound === 1) {
+      const hasVeg = s.hand.some(c => CARD_DEFS[c.defId].type === CardType.VEGETABLE);
+      if (!hasVeg) {
+        s.deck.push(...s.hand);
+        s.hand = [];
+        s.deck = shuffle(s.deck);
+        drawCards(s, CARDS_PER_DRAW);
+        s.log.push("야채 없음 → 리드로우!");
+      }
+    }
+
     s.log.push(`턴 ${s.turnInRound}: ${s.hand.length}장 드로우, 물 ${s.water}`);
     this.render();
   }

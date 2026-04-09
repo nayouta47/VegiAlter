@@ -70,6 +70,7 @@ export class GameEngine {
 
       threatSchedule: loadCustomThreats() ?? [...THREAT_SCHEDULE, BOSS_THREATS],
       maxTimerThisRound: 0,
+      pendingThreats: [],
 
       shopChoices: [],
       shopGoldItems: [],

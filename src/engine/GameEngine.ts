@@ -207,34 +207,7 @@ export class GameEngine {
       cell.plant.growthStack++;
       s.log.push(`물주기 → 식물(${row},${col}) 성장+1 (${cell.plant.growthStack})`);
     } else if (def.type === CardType.TRANSPLANT) {
-      // Two-step: first click selects source, second click selects destination
-      if (s.transplantSourceCell === null) {
-        // Step 1: select source (must have a plant)
-        const cell = s.grid[row][col];
-        if (!cell.plant) return;
-        s.transplantSourceCell = { row, col };
-        s.log.push(`옮겨심기: 원본 선택 (${row},${col})`);
-        this.render();
-        return;
-      } else {
-        // Step 2: select destination (must be empty)
-        const destCell = s.grid[row][col];
-        if (destCell.plant) return;
-
-        const src = s.transplantSourceCell;
-        const srcCell = s.grid[src.row][src.col];
-        if (!srcCell.plant) { s.transplantSourceCell = null; return; }
-
-        // Move plant, preserving all stats
-        destCell.plant = srcCell.plant;
-        srcCell.plant = null;
-        s.transplantSourceCell = null;
-
-        s.water -= def.cost;
-        removeFromHand(s, card.instanceId);
-        discardCard(s, card);
-        s.log.push(`옮겨심기: (${src.row},${src.col}) → (${row},${col})`);
-      }
+      return; // handled by playTransplantOnEdge
     } else if (def.type === CardType.TOOL && def.toolEffect === ToolEffect.WATERING_CAN) {
       // Watering can: +1 growth to cross
       if (s.water < def.cost) return;

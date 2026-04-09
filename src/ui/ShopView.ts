@@ -34,17 +34,27 @@ export function renderShop(state: GameState): string {
   html += `<div class="shop-items">`;
   for (let i = 0; i < state.shopGoldItems.length; i++) {
     const item = state.shopGoldItems[i];
-    const canAfford = state.gold >= item.cost;
-    const itemClass = canAfford ? "shop-item" : "shop-item shop-item--disabled";
-    const goldTooltip = getShopTooltip(item);
-    html += `
-      <div class="${itemClass}" data-gold-index="${i}">
-        <div class="shop-item-emoji">${item.emoji}</div>
-        <div class="shop-item-label">${item.label}</div>
-        <div class="shop-item-cost">🪙${item.cost}</div>
-        ${goldTooltip ? `<div class="card-tooltip">${goldTooltip}</div>` : ""}
-      </div>
-    `;
+    if (item.sold) {
+      html += `
+        <div class="shop-item shop-item--disabled">
+          <div class="shop-item-emoji">${item.emoji}</div>
+          <div class="shop-item-label">${item.label}</div>
+          <div class="shop-item-cost">매진</div>
+        </div>
+      `;
+    } else {
+      const canAfford = state.gold >= item.cost;
+      const itemClass = canAfford ? "shop-item" : "shop-item shop-item--disabled";
+      const goldTooltip = getShopTooltip(item);
+      html += `
+        <div class="${itemClass}" data-gold-index="${i}">
+          <div class="shop-item-emoji">${item.emoji}</div>
+          <div class="shop-item-label">${item.label}</div>
+          <div class="shop-item-cost">🪙${item.cost}</div>
+          ${goldTooltip ? `<div class="card-tooltip">${goldTooltip}</div>` : ""}
+        </div>
+      `;
+    }
   }
   html += `</div></div>`;
 

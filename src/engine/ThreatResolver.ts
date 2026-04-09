@@ -1,4 +1,4 @@
-import { GameState, SequenceElement, Threat } from "../types";
+import { GameState, SequenceElement } from "../types";
 import { shuffle } from "../utils/random";
 
 export function placeThreatsForRound(state: GameState, roundIndex: number): void {

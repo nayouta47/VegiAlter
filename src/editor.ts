@@ -174,7 +174,7 @@ function bindEditorEvents(): void {
   app.querySelectorAll<HTMLInputElement>("[data-field]").forEach((el) => {
     el.addEventListener("change", () => {
       const [ri, ti] = el.dataset.threat!.split("-").map(Number);
-      const field = el.dataset.field as "timer" | "hurdle";
+      const field = el.dataset.field as "appearOnTurn" | "hurdle";
       rounds[ri].threats[ti][field] = parseInt(el.value) || 1;
     });
   });

@@ -9,6 +9,7 @@ const app = document.getElementById("app")!;
 const engine = new GameEngine();
 let dragCardIndex: number | null = null;
 let currentPreviewCell: string | null = null;
+let transplantEdge: { rowA: number; colA: number; rowB: number; colB: number } | null = null;
 
 engine.setRenderer((state) => {
   render(state, app);

@@ -45,7 +45,10 @@ export function renderGrid(state: GameState): string {
         html += `<div class="threats">`;
         for (const threat of cell.threats) {
           if (threat.fired) continue;
-          html += `<div class="threat-badge">⏱️${threat.timer}</div>`;
+          const seq = threat.sequence.map(s =>
+            s === SequenceElement.HP ? "💔" : s === SequenceElement.TIME ? "⌛" : "🪙"
+          ).join("");
+          html += `<div class="threat-badge">⏱️${threat.timer} ${seq}</div>`;
         }
         html += `</div>`;
       }

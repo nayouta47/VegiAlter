@@ -247,6 +247,40 @@ body {
   color: #ef5350;
 }
 
+/* Tooltip */
+.card-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid #5a5a8a;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: #ddd;
+  white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.card-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #5a5a8a;
+}
+
+.card:hover .card-tooltip,
+.shop-item:hover .card-tooltip {
+  display: block;
+}
+
 /* Actions */
 .actions {
   display: flex;

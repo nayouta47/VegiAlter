@@ -4,6 +4,7 @@ import { renderGrid } from "./GridView";
 import { renderHand } from "./HandView";
 import { renderLog } from "./LogView";
 import { renderShop } from "./ShopView";
+import { renderRewards } from "./RewardView";
 
 export function render(state: GameState, container: HTMLElement): void {
   let html = "";

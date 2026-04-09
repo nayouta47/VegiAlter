@@ -48,16 +48,31 @@ function resolveFullStack(state: GameState): void {
     }
   }
 
-  // Apply defense +1 for all full-stack plants (self + adjacent 4)
+  // Apply per-crop harvest effects
   for (const pos of fullStackCells) {
-    const adjacents = getAdjacentCells(state, pos.row, pos.col, true);
-    for (const adj of adjacents) {
-      if (adj.plant) {
-        adj.plant.defense += 1;
-        state.log.push(
-          `풀스택(${pos.row},${pos.col}) → 식물(${adj.row},${adj.col}) 방어+1 (총 ${adj.plant.defense})`
-        );
+    const cell = state.grid[pos.row][pos.col];
+    if (!cell.plant) continue;
+    const defId = cell.plant.defId;
+
+    if (defId === "garlic") {
+      // Garlic: +1 defense to self only
+      cell.plant.defense += 1;
+      state.log.push(
+        `🧄 수확(${pos.row},${pos.col}) 방어+1 (총 ${cell.plant.defense})`
+      );
+    } else if (defId === "bean") {
+      // Bean: +1 growth to adjacent 4 cells + 1 gold
+      const adjacents = getAdjacentCells(state, pos.row, pos.col, false);
+      for (const adj of adjacents) {
+        if (adj.plant && !adj.plant.stunned) {
+          adj.plant.growthStack++;
+          state.log.push(
+            `🫘 수확(${pos.row},${pos.col}) → 식물(${adj.row},${adj.col}) 성장+1 (${adj.plant.growthStack})`
+          );
+        }
       }
+      state.gold += 1;
+      state.log.push(`🫘 수확(${pos.row},${pos.col}) 골드+1 (총 ${state.gold})`);
     }
   }
 

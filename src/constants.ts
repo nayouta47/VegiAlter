@@ -126,6 +126,7 @@ export const INITIAL_GRID_COLS = 2;
 export const WATER_PER_TURN = 3;
 export const CARDS_PER_DRAW = 5;
 
+export const REWARD_GOLD = 30;
 export const SHOP_EXPAND_COST = 3;
 export const SHOP_HEAL_COST = 2;
 

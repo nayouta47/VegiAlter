@@ -231,6 +231,33 @@ export class GameEngine {
     this.render();
   }
 
+  playTransplantOnEdge(rowA: number, colA: number, rowB: number, colB: number): void {
+    const s = this.state;
+    if (s.phase !== GamePhase.ACTION || s.selectedCardIndex === null) return;
+
+    const card = s.hand[s.selectedCardIndex];
+    if (!card) return;
+    const def = CARD_DEFS[card.defId];
+    if (def.type !== CardType.TRANSPLANT) return;
+    if (s.water < def.cost) return;
+
+    const cellA = s.grid[rowA][colA];
+    const cellB = s.grid[rowB][colB];
+    if (!cellA.plant && !cellB.plant) return;
+
+    const temp = cellA.plant;
+    cellA.plant = cellB.plant;
+    cellB.plant = temp;
+
+    s.water -= def.cost;
+    removeFromHand(s, card.instanceId);
+    discardCard(s, card);
+    s.log.push(`옮겨심기: (${rowA},${colA}) ↔ (${rowB},${colB})`);
+
+    s.selectedCardIndex = null;
+    this.render();
+  }
+
   endTurn(): void {
     const s = this.state;
     if (s.phase !== GamePhase.ACTION) return;

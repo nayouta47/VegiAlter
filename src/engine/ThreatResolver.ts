@@ -215,6 +215,7 @@ function killPlant(state: GameState, row: number, col: number): void {
 }
 
 export function allThreatsFired(state: GameState): boolean {
+  if (state.pendingThreats.length > 0) return false;
   for (const row of state.grid) {
     for (const cell of row) {
       for (const threat of cell.threats) {

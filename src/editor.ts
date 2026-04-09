@@ -140,7 +140,7 @@ function bindEditorEvents(): void {
     rounds.splice(bossIdx, 0, {
       label: "",
       isBoss: false,
-      threats: [{ timer: 3, hurdle: 2, sequence: [SequenceElement.HP, SequenceElement.MONEY] }],
+      threats: [{ appearOnTurn: 1, hurdle: 2, sequence: [SequenceElement.HP, SequenceElement.MONEY] }],
     });
     relabelRounds();
     renderEditor();
@@ -158,7 +158,7 @@ function bindEditorEvents(): void {
   app.querySelectorAll<HTMLElement>("[data-add-threat]").forEach((el) => {
     el.addEventListener("click", () => {
       const ri = parseInt(el.dataset.addThreat!);
-      rounds[ri].threats.push({ timer: 3, hurdle: 2, sequence: [SequenceElement.HP, SequenceElement.MONEY] });
+      rounds[ri].threats.push({ appearOnTurn: 1, hurdle: 2, sequence: [SequenceElement.HP, SequenceElement.MONEY] });
       renderEditor();
     });
   });

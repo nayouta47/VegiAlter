@@ -17,7 +17,7 @@ export function render(state: GameState, container: HTMLElement): void {
       html += renderGrid(state);
       html += renderHand(state);
       html += `<div class="actions">
-        <button class="btn btn--end-turn" id="btn-end-turn">턴 종료</button>
+        <button class="btn btn--end-turn" id="btn-end-turn">턴 종료 🌧️ 전체 성장+1</button>
       </div>`;
       html += renderLog(state);
       break;

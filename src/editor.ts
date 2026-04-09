@@ -30,7 +30,7 @@ function loadRounds(): void {
     label: `라운드 ${i + 1}`,
     isBoss: false,
     threats: rt.threats.map((t) => ({
-      timer: t.timer,
+      appearOnTurn: t.appearOnTurn,
       hurdle: t.hurdle,
       sequence: [...t.sequence],
     })),
@@ -39,7 +39,7 @@ function loadRounds(): void {
     label: "보스",
     isBoss: true,
     threats: BOSS_THREATS.threats.map((t) => ({
-      timer: t.timer,
+      appearOnTurn: t.appearOnTurn,
       hurdle: t.hurdle,
       sequence: [...t.sequence],
     })),

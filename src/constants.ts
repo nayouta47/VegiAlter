@@ -76,46 +76,42 @@ export const STARTING_DECK: string[] = [
 ];
 
 export const THREAT_SCHEDULE: RoundThreats[] = [
-  // Round 1
-  { threats: [{ appearOnTurn: 1, hurdle: 2, sequence: [S.HP, S.MONEY] }] },
-  // Round 2
-  {
-    threats: [
-      { appearOnTurn: 1, hurdle: 3, sequence: [S.HP, S.HP, S.MONEY] },
-      { appearOnTurn: 2, hurdle: 3, sequence: [S.HP, S.TIME, S.MONEY] },
-    ],
-  },
-  // Round 3
-  {
-    threats: [
-      { appearOnTurn: 1, hurdle: 4, sequence: [S.HP, S.HP, S.HP] },
-      { appearOnTurn: 2, hurdle: 3, sequence: [S.HP, S.TIME, S.MONEY, S.MONEY] },
-    ],
-  },
-  // Round 4
-  {
-    threats: [
-      { appearOnTurn: 1, hurdle: 3, sequence: [S.HP, S.HP] },
-      { appearOnTurn: 2, hurdle: 4, sequence: [S.HP, S.HP, S.TIME, S.MONEY] },
-      { appearOnTurn: 3, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.MONEY] },
-    ],
-  },
-  // Round 5
-  {
-    threats: [
-      { appearOnTurn: 1, hurdle: 4, sequence: [S.HP, S.HP, S.HP] },
-      { appearOnTurn: 2, hurdle: 5, sequence: [S.HP, S.HP, S.TIME, S.TIME] },
-      { appearOnTurn: 3, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.MONEY, S.MONEY] },
-    ],
-  },
+  // Round 1: 1 phase
+  { phases: [
+    [{ hurdle: 2, sequence: [S.HP, S.MONEY] }],
+  ]},
+  // Round 2: 2 phases
+  { phases: [
+    [{ hurdle: 3, sequence: [S.HP, S.HP, S.MONEY] }],
+    [{ hurdle: 3, sequence: [S.HP, S.TIME, S.MONEY] }],
+  ]},
+  // Round 3: 2 phases
+  { phases: [
+    [{ hurdle: 4, sequence: [S.HP, S.HP, S.HP] }],
+    [{ hurdle: 3, sequence: [S.HP, S.TIME, S.MONEY, S.MONEY] }],
+  ]},
+  // Round 4: 3 phases
+  { phases: [
+    [{ hurdle: 3, sequence: [S.HP, S.HP] }],
+    [{ hurdle: 4, sequence: [S.HP, S.HP, S.TIME, S.MONEY] }],
+    [{ hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.MONEY] }],
+  ]},
+  // Round 5: 3 phases
+  { phases: [
+    [{ hurdle: 4, sequence: [S.HP, S.HP, S.HP] }],
+    [{ hurdle: 5, sequence: [S.HP, S.HP, S.TIME, S.TIME] }],
+    [{ hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.MONEY, S.MONEY] }],
+  ]},
 ];
 
 export const BOSS_THREATS: RoundThreats = {
-  threats: [
-    { appearOnTurn: 1, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.HP] },
-    { appearOnTurn: 1, hurdle: 4, sequence: [S.HP, S.HP, S.TIME, S.TIME] },
-    { appearOnTurn: 2, hurdle: 6, sequence: [S.HP, S.HP, S.HP, S.HP, S.HP] },
-    { appearOnTurn: 3, hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.TIME, S.MONEY, S.MONEY] },
+  phases: [
+    [
+      { hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.HP] },
+      { hurdle: 4, sequence: [S.HP, S.HP, S.TIME, S.TIME] },
+    ],
+    [{ hurdle: 6, sequence: [S.HP, S.HP, S.HP, S.HP, S.HP] }],
+    [{ hurdle: 5, sequence: [S.HP, S.HP, S.HP, S.TIME, S.MONEY, S.MONEY] }],
   ],
 };
 

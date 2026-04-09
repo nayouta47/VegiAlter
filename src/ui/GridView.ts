@@ -37,6 +37,7 @@ export function renderGrid(state: GameState): string {
             </div>
             ${stunIcon}
             ${defenseIcon}
+            ${cell.plant.growthStack >= cell.plant.fullStack ? '<span class="harvest-icon">🌾</span>' : ""}
           </div>
         `;
       }

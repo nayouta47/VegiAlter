@@ -16,11 +16,6 @@ export function renderGrid(state: GameState): string {
       let cellClass = "cell";
       if (isValidTarget) cellClass += " cell--valid";
       if (cell.plant) cellClass += " cell--planted";
-      if (state.transplantSourceCell
-          && r === state.transplantSourceCell.row
-          && c === state.transplantSourceCell.col) {
-        cellClass += " cell--transplant-source";
-      }
 
       html += `<div class="${cellClass}" data-row="${r}" data-col="${c}">`;
 

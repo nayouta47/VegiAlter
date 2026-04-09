@@ -95,6 +95,7 @@ export interface ShopItem {
   cost: number;
   label: string;
   emoji: string;
+  sold: boolean;
 }
 
 export interface RoundRewards {

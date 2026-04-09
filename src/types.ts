@@ -43,6 +43,7 @@ export interface CardDef {
   fullStack?: number;
   toolEffect?: ToolEffect;
   emoji: string;
+  description?: string;
 }
 
 export interface CardInstance {

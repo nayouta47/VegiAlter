@@ -44,16 +44,38 @@ export function renderRewards(state: GameState): string {
   html += `</div>`;
 
   if (rw.expandPending && !rw.expandClaimed) {
-    html += `<div class="reward-choices reward-choices--dirs">`;
-    const dirs: { dir: string; label: string }[] = [
-      { dir: "top", label: "↑ 위" },
-      { dir: "bottom", label: "↓ 아래" },
-      { dir: "left", label: "← 왼쪽" },
-      { dir: "right", label: "→ 오른쪽" },
-    ];
-    for (const d of dirs) {
-      html += `<div class="reward-choice reward-choice--dir" data-reward-expand="${d.dir}">${d.label}</div>`;
+    const rows = state.gridRows;
+    const cols = state.gridCols;
+    const popupCols = cols + 2;
+
+    html += `<div class="expand-popup">`;
+    html += `<div class="expand-grid" style="grid-template-columns: repeat(${popupCols}, 48px);">`;
+
+    for (let r = 0; r < rows + 2; r++) {
+      for (let c = 0; c < popupCols; c++) {
+        const isTop = r === 0 && c > 0 && c <= cols;
+        const isBottom = r === rows + 1 && c > 0 && c <= cols;
+        const isLeft = c === 0 && r > 0 && r <= rows;
+        const isRight = c === cols + 1 && r > 0 && r <= rows;
+        const isExisting = r > 0 && r <= rows && c > 0 && c <= cols;
+
+        if (isExisting) {
+          html += `<div class="expand-cell expand-cell--existing">🌿</div>`;
+        } else if (isTop) {
+          html += `<div class="expand-cell expand-cell--add" data-reward-expand="top">+</div>`;
+        } else if (isBottom) {
+          html += `<div class="expand-cell expand-cell--add" data-reward-expand="bottom">+</div>`;
+        } else if (isLeft) {
+          html += `<div class="expand-cell expand-cell--add" data-reward-expand="left">+</div>`;
+        } else if (isRight) {
+          html += `<div class="expand-cell expand-cell--add" data-reward-expand="right">+</div>`;
+        } else {
+          html += `<div class="expand-cell expand-cell--empty"></div>`;
+        }
+      }
     }
+
+    html += `</div>`;
     html += `</div>`;
   }
 

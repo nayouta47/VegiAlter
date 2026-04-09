@@ -308,7 +308,65 @@ function clearDragPreview(): void {
 function clearDragUI(): void {
   clearDragPreview();
   currentPreviewCell = null;
+  transplantEdge = null;
   app.querySelectorAll(".cell--valid").forEach((el) => el.classList.remove("cell--valid"));
+}
+
+function detectTransplantEdge(
+  el: HTMLElement, clientX: number, clientY: number, row: number, col: number
+): { rowA: number; colA: number; rowB: number; colB: number } | null {
+  const rect = el.getBoundingClientRect();
+  const x = clientX - rect.left;
+  const y = clientY - rect.top;
+  const w = rect.width;
+  const h = rect.height;
+  const threshold = Math.min(w, h) * 0.35;
+
+  const distLeft = x;
+  const distRight = w - x;
+  const distTop = y;
+  const distBottom = h - y;
+  const minDist = Math.min(distLeft, distRight, distTop, distBottom);
+  if (minDist > threshold) return null;
+
+  let dr = 0, dc = 0;
+  if (minDist === distTop) dr = -1;
+  else if (minDist === distBottom) dr = 1;
+  else if (minDist === distLeft) dc = -1;
+  else dc = 1;
+
+  const adjRow = row + dr;
+  const adjCol = col + dc;
+  const s = engine.state;
+  if (adjRow < 0 || adjRow >= s.gridRows || adjCol < 0 || adjCol >= s.gridCols) return null;
+
+  const cellA = s.grid[row][col];
+  const cellB = s.grid[adjRow][adjCol];
+  if (!cellA.plant && !cellB.plant) return null;
+
+  return { rowA: row, colA: col, rowB: adjRow, colB: adjCol };
+}
+
+function showTransplantSwapPreview(edge: { rowA: number; colA: number; rowB: number; colB: number }): void {
+  const s = engine.state;
+  const plantA = s.grid[edge.rowA][edge.colA].plant;
+  const plantB = s.grid[edge.rowB][edge.colB].plant;
+
+  const elA = app.querySelector(`[data-row="${edge.rowA}"][data-col="${edge.colA}"]`) as HTMLElement;
+  const elB = app.querySelector(`[data-row="${edge.rowB}"][data-col="${edge.colB}"]`) as HTMLElement;
+
+  if (elA) elA.classList.add("cell--transplant-swap");
+  if (elB) elB.classList.add("cell--transplant-swap");
+
+  const dr = edge.rowB - edge.rowA;
+  const dc = edge.colB - edge.colA;
+  if (dr === -1) { elA?.classList.add("cell--swap-top"); elB?.classList.add("cell--swap-bottom"); }
+  else if (dr === 1) { elA?.classList.add("cell--swap-bottom"); elB?.classList.add("cell--swap-top"); }
+  else if (dc === -1) { elA?.classList.add("cell--swap-left"); elB?.classList.add("cell--swap-right"); }
+  else { elA?.classList.add("cell--swap-right"); elB?.classList.add("cell--swap-left"); }
+
+  if (plantB) addPreviewToCell(edge.rowA, edge.colA, CARD_DEFS[plantB.defId].emoji);
+  if (plantA) addPreviewToCell(edge.rowB, edge.colB, CARD_DEFS[plantA.defId].emoji);
 }
 
 // Start the game

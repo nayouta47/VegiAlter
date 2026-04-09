@@ -118,7 +118,6 @@ export interface GameState {
   freePickUsed: boolean;
 
   selectedCardIndex: number | null;
-  transplantSourceCell: { row: number; col: number } | null;
 
   nextInstanceId: number;
   nextThreatId: number;

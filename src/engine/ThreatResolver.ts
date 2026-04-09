@@ -7,29 +7,53 @@ export function placeThreatsForRound(state: GameState, roundIndex: number): void
     : state.threatSchedule[roundIndex];
   if (!schedule) return;
 
+  state.currentPhase = 0;
   state.pendingThreats = [];
 
-  for (const t of schedule.threats) {
+  // Load phase 0 threats
+  const phase = schedule.phases[0];
+  if (!phase) return;
+
+  for (const t of phase) {
     state.pendingThreats.push({
       hurdle: t.hurdle,
       sequence: [...t.sequence],
-      appearOnTurn: t.appearOnTurn,
     });
   }
 }
 
-export function placePendingThreats(state: GameState): void {
-  const toPlace = [];
-  const remaining = [];
+export function advancePhase(state: GameState, roundIndex: number): boolean {
+  const schedule = state.isBoss
+    ? state.threatSchedule[state.threatSchedule.length - 1]
+    : state.threatSchedule[roundIndex];
+  if (!schedule) return false;
 
-  for (const pt of state.pendingThreats) {
-    if (pt.appearOnTurn <= state.turnInRound) {
-      toPlace.push(pt);
-    } else {
-      remaining.push(pt);
-    }
+  state.currentPhase++;
+  if (state.currentPhase >= schedule.phases.length) return false;
+
+  const phase = schedule.phases[state.currentPhase];
+  for (const t of phase) {
+    state.pendingThreats.push({
+      hurdle: t.hurdle,
+      sequence: [...t.sequence],
+    });
   }
-  state.pendingThreats = remaining;
+
+  state.log.push(`--- 페이즈 ${state.currentPhase + 1} 시작 ---`);
+  return true;
+}
+
+export function getTotalPhases(state: GameState, roundIndex: number): number {
+  const schedule = state.isBoss
+    ? state.threatSchedule[state.threatSchedule.length - 1]
+    : state.threatSchedule[roundIndex];
+  if (!schedule) return 0;
+  return schedule.phases.length;
+}
+
+export function placePendingThreats(state: GameState): void {
+  const toPlace = state.pendingThreats;
+  state.pendingThreats = [];
   if (toPlace.length === 0) return;
 
   // Find cells without unfired threats
@@ -42,7 +66,7 @@ export function placePendingThreats(state: GameState): void {
     }
   }
 
-  // All cells full — permanently skip all threats this turn
+  // All cells full — permanently skip all threats
   if (available.length === 0) {
     for (const pt of toPlace) {
       state.log.push(`위협 패스 (빈 칸 없음) — 허들:${pt.hurdle}`);
@@ -53,7 +77,6 @@ export function placePendingThreats(state: GameState): void {
   const shuffled = shuffle(available);
   for (let i = 0; i < toPlace.length; i++) {
     if (i >= shuffled.length) {
-      // No more cells — permanently skip remaining threats
       state.log.push(`위협 패스 (빈 칸 없음) — 허들:${toPlace[i].hurdle}`);
       continue;
     }
@@ -204,9 +227,6 @@ function killPlant(state: GameState, row: number, col: number): void {
   if (card) {
     card.isDummy = true;
   }
-  // Also check cards still in the discard (dead plant card goes to discard)
-  // The card might not be in any pile if it was placed from hand
-  // In that case we need to create a new discard entry
   if (!card) {
     state.discard.push({
       instanceId: plant.cardInstanceId,

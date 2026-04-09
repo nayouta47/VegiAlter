@@ -2,7 +2,7 @@ import { SequenceElement } from "./types";
 import { THREAT_SCHEDULE, BOSS_THREATS } from "./constants";
 
 interface EditorThreat {
-  timer: number;
+  appearOnTurn: number;
   hurdle: number;
   sequence: SequenceElement[];
 }

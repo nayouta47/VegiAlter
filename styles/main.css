@@ -303,6 +303,27 @@ body {
   margin-top: 2px;
 }
 
+.card-corner {
+  position: absolute;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 4px;
+  line-height: 1.2;
+}
+
+.card-corner--hp {
+  top: 3px;
+  left: 3px;
+  color: #ef5350;
+}
+
+.card-corner--growth {
+  top: 3px;
+  right: 3px;
+  color: #66bb6a;
+}
+
 .card-dummy-label {
   font-size: 10px;
   color: #ef5350;

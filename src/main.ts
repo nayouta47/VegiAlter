@@ -410,6 +410,11 @@ document.addEventListener("keydown", (e) => {
     console.log("GameState:", JSON.parse(JSON.stringify(engine.state)));
   }
   if (e.key === "Escape") {
+    if (codexOpen) {
+      codexOpen = false;
+      engine.render();
+      return;
+    }
     if (engine.state.phase === GamePhase.ACTION) {
       engine.state.selectedCardIndex = null;
       transplantEdge = null;

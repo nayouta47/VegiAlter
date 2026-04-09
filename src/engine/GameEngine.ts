@@ -28,7 +28,7 @@ import {
   addCardToDeck,
 } from "./DeckManager";
 import { clearGrid, createGrid, expandGrid, getAdjacentCells, placePlant } from "./GridManager";
-import { allThreatsFired, placeThreatsForRound } from "./ThreatResolver";
+import { allThreatsFired, placePendingThreats, placeThreatsForRound } from "./ThreatResolver";
 import { resolveTurnEnd } from "./TurnResolver";
 import { generateShop } from "./ShopManager";
 import { shuffle } from "../utils/random";

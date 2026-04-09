@@ -253,6 +253,22 @@ function bindEvents(): void {
     engine.startRun();
   });
 
+  // Codex
+  document.getElementById("btn-codex")?.addEventListener("click", () => {
+    codexOpen = !codexOpen;
+    engine.render();
+  });
+  document.getElementById("codex-close")?.addEventListener("click", () => {
+    codexOpen = false;
+    engine.render();
+  });
+  document.getElementById("codex-overlay")?.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement).id === "codex-overlay") {
+      codexOpen = false;
+      engine.render();
+    }
+  });
+
 }
 
 // --- Drag & Drop helpers ---

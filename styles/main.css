@@ -137,11 +137,16 @@ body {
   padding: 0 3px;
 }
 
-.cell--transplant-source {
+.cell--transplant-swap {
   border-color: #ff9800 !important;
-  background: #3a3020;
+  background: #3a3020 !important;
   box-shadow: 0 0 8px rgba(255, 152, 0, 0.4);
 }
+
+.cell--swap-top { border-top: 3px solid #ffd54f !important; }
+.cell--swap-bottom { border-bottom: 3px solid #ffd54f !important; }
+.cell--swap-left { border-left: 3px solid #ffd54f !important; }
+.cell--swap-right { border-right: 3px solid #ffd54f !important; }
 
 /* Threats */
 .threats {

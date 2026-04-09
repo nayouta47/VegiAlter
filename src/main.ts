@@ -10,9 +10,10 @@ const engine = new GameEngine();
 let dragCardIndex: number | null = null;
 let currentPreviewCell: string | null = null;
 let transplantEdge: { rowA: number; colA: number; rowB: number; colB: number } | null = null;
+let codexOpen = false;
 
 engine.setRenderer((state) => {
-  render(state, app);
+  render(state, app, codexOpen);
   bindEvents();
 });
 

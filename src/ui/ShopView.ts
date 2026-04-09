@@ -1,4 +1,5 @@
-import { GameState } from "../types";
+import { GameState, ShopItemType } from "../types";
+import { CARD_DEFS } from "../constants";
 
 export function renderShop(state: GameState): string {
   let html = `<div class="shop">`;

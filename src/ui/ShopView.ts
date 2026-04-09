@@ -36,11 +36,13 @@ export function renderShop(state: GameState): string {
     const item = state.shopGoldItems[i];
     const canAfford = state.gold >= item.cost;
     const itemClass = canAfford ? "shop-item" : "shop-item shop-item--disabled";
+    const goldTooltip = getShopTooltip(item);
     html += `
       <div class="${itemClass}" data-gold-index="${i}">
         <div class="shop-item-emoji">${item.emoji}</div>
         <div class="shop-item-label">${item.label}</div>
         <div class="shop-item-cost">🪙${item.cost}</div>
+        ${goldTooltip ? `<div class="card-tooltip">${goldTooltip}</div>` : ""}
       </div>
     `;
   }

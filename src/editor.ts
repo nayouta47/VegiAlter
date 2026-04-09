@@ -29,20 +29,24 @@ function loadRounds(): void {
   rounds = THREAT_SCHEDULE.map((rt, i) => ({
     label: `라운드 ${i + 1}`,
     isBoss: false,
-    threats: rt.threats.map((t) => ({
-      appearOnTurn: t.appearOnTurn,
-      hurdle: t.hurdle,
-      sequence: [...t.sequence],
-    })),
+    threats: rt.phases.flatMap((phase, pi) =>
+      phase.map((t) => ({
+        appearOnTurn: pi + 1,
+        hurdle: t.hurdle,
+        sequence: [...t.sequence],
+      }))
+    ),
   }));
   rounds.push({
     label: "보스",
     isBoss: true,
-    threats: BOSS_THREATS.threats.map((t) => ({
-      appearOnTurn: t.appearOnTurn,
-      hurdle: t.hurdle,
-      sequence: [...t.sequence],
-    })),
+    threats: BOSS_THREATS.phases.flatMap((phase, pi) =>
+      phase.map((t) => ({
+        appearOnTurn: pi + 1,
+        hurdle: t.hurdle,
+        sequence: [...t.sequence],
+      }))
+    ),
   });
 }
 

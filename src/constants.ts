@@ -11,7 +11,7 @@ export const CARD_DEFS: Record<string, CardDef> = {
     hp: 1,
     fullStack: 3,
     emoji: "🫘",
-    description: "HP 1, 수확: 상하좌우 성장+1, 골드+1",
+    description: "수확: 상하좌우 성장+1, 골드+1",
   },
   garlic: {
     id: "garlic",

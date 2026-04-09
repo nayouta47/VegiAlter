@@ -49,31 +49,20 @@ export function renderRewards(state: GameState): string {
     const popupCols = cols + 2;
 
     html += `<div class="expand-popup">`;
-    html += `<div class="expand-grid" style="grid-template-columns: repeat(${popupCols}, 48px);">`;
+    html += `<div class="expand-grid" style="grid-template-columns: repeat(${popupCols}, 48px); grid-template-rows: repeat(${rows + 2}, 48px);">`;
 
-    for (let r = 0; r < rows + 2; r++) {
-      for (let c = 0; c < popupCols; c++) {
-        const isTop = r === 0 && c > 0 && c <= cols;
-        const isBottom = r === rows + 1 && c > 0 && c <= cols;
-        const isLeft = c === 0 && r > 0 && r <= rows;
-        const isRight = c === cols + 1 && r > 0 && r <= rows;
-        const isExisting = r > 0 && r <= rows && c > 0 && c <= cols;
+    // One clickable cell per direction, spanning the full row/column
+    html += `<div class="expand-cell expand-cell--add" data-reward-expand="top" style="grid-row:1; grid-column:2/span ${cols}; width:auto">+</div>`;
+    html += `<div class="expand-cell expand-cell--add" data-reward-expand="left" style="grid-row:2/span ${rows}; grid-column:1; height:auto">+</div>`;
 
-        if (isExisting) {
-          html += `<div class="expand-cell expand-cell--existing">🌿</div>`;
-        } else if (isTop) {
-          html += `<div class="expand-cell expand-cell--add" data-reward-expand="top">+</div>`;
-        } else if (isBottom) {
-          html += `<div class="expand-cell expand-cell--add" data-reward-expand="bottom">+</div>`;
-        } else if (isLeft) {
-          html += `<div class="expand-cell expand-cell--add" data-reward-expand="left">+</div>`;
-        } else if (isRight) {
-          html += `<div class="expand-cell expand-cell--add" data-reward-expand="right">+</div>`;
-        } else {
-          html += `<div class="expand-cell expand-cell--empty"></div>`;
-        }
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        html += `<div class="expand-cell expand-cell--existing" style="grid-row:${r + 2}; grid-column:${c + 2}">🌿</div>`;
       }
     }
+
+    html += `<div class="expand-cell expand-cell--add" data-reward-expand="right" style="grid-row:2/span ${rows}; grid-column:${popupCols}; height:auto">+</div>`;
+    html += `<div class="expand-cell expand-cell--add" data-reward-expand="bottom" style="grid-row:${rows + 2}; grid-column:2/span ${cols}; width:auto">+</div>`;
 
     html += `</div>`;
     html += `</div>`;

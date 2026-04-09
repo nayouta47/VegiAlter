@@ -125,6 +125,8 @@ export class GameEngine {
     s.water = WATER_PER_TURN;
     s.selectedCardIndex = null;
 
+    placePendingThreats(s);
+
     drawCards(s, CARDS_PER_DRAW);
 
     // First turn mulligan: redraw if no vegetables

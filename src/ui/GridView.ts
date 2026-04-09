@@ -1,4 +1,4 @@
-import { CardDef, CardType, GameState, ToolEffect } from "../types";
+import { CardDef, CardType, GameState, SequenceElement, ToolEffect } from "../types";
 import { CARD_DEFS } from "../constants";
 
 export function renderGrid(state: GameState): string {

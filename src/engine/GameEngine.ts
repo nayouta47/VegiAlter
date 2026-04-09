@@ -28,7 +28,7 @@ import {
   addCardToDeck,
 } from "./DeckManager";
 import { clearGrid, createGrid, expandGrid, getAdjacentCells, placePlant } from "./GridManager";
-import { allThreatsFired, placePendingThreats, placeThreatsForRound } from "./ThreatResolver";
+import { advancePhase, allThreatsFired, getTotalPhases, placePendingThreats, placeThreatsForRound } from "./ThreatResolver";
 import { resolveTurnEnd } from "./TurnResolver";
 import { generateShop } from "./ShopManager";
 import { shuffle } from "../utils/random";
@@ -77,6 +77,8 @@ export class GameEngine {
 
       selectedCardIndex: null,
       roundRewards: null,
+      currentPhase: 0,
+      waitingForManualRoundEnd: false,
 
       nextInstanceId: 1,
       nextThreatId: 1,
@@ -94,6 +96,7 @@ export class GameEngine {
     s.runRound++;
     s.turnInRound = 0;
     s.log = [];
+    s.waitingForManualRoundEnd = false;
 
     // Check if boss round
     const normalRoundCount = s.threatSchedule.length - 1;
@@ -110,9 +113,12 @@ export class GameEngine {
     // Clear grid plants (threats are cleared too)
     clearGrid(s);
 
-    // Place threats
+    // Place threats (phase 0)
     const roundIdx = s.isBoss ? s.threatSchedule.length - 1 : s.runRound - 1;
     placeThreatsForRound(s, roundIdx);
+
+    const totalPhases = getTotalPhases(s, roundIdx);
+    s.log.push(`페이즈 1/${totalPhases} 시작`);
 
     this.startTurn();
   }
@@ -130,7 +136,7 @@ export class GameEngine {
 
     // First turn mulligan: redraw if no vegetables
     if (s.turnInRound === 1) {
-      const hasVeg = s.hand.some(c => CARD_DEFS[c.defId].type === CardType.VEGETABLE);
+      const hasVeg = s.hand.some(c => CARD_DEFS[c.defId].type === CardType.VEGETABLE && !c.isDummy);
       if (!hasVeg) {
         s.deck.push(...s.hand);
         s.hand = [];
@@ -147,6 +153,7 @@ export class GameEngine {
   selectCard(handIndex: number): void {
     const s = this.state;
     if (s.phase !== GamePhase.ACTION) return;
+    if (s.waitingForManualRoundEnd) return; // Can only harvest during manual round end
 
     if (s.selectedCardIndex === handIndex) {
       s.selectedCardIndex = null;
@@ -180,7 +187,6 @@ export class GameEngine {
         // Water drop is consumed (not discarded)
         s.log.push(`물방울 사용 → 물 +1 (${s.water})`);
         s.selectedCardIndex = null;
-        // Remove from everywhere if temp
         this.render();
         return;
       }
@@ -219,6 +225,7 @@ export class GameEngine {
   playCardOnCell(row: number, col: number): void {
     const s = this.state;
     if (s.phase !== GamePhase.ACTION || s.selectedCardIndex === null) return;
+    if (s.waitingForManualRoundEnd) return;
 
     const card = s.hand[s.selectedCardIndex];
     if (!card) return;
@@ -272,6 +279,7 @@ export class GameEngine {
   playTransplantOnEdge(rowA: number, colA: number, rowB: number, colB: number): void {
     const s = this.state;
     if (s.phase !== GamePhase.ACTION || s.selectedCardIndex === null) return;
+    if (s.waitingForManualRoundEnd) return;
 
     const card = s.hand[s.selectedCardIndex];
     if (!card) return;
@@ -299,6 +307,7 @@ export class GameEngine {
   endTurn(): void {
     const s = this.state;
     if (s.phase !== GamePhase.ACTION) return;
+    if (s.waitingForManualRoundEnd) return; // Use confirmRoundEnd instead
 
     s.selectedCardIndex = null;
 
@@ -316,23 +325,72 @@ export class GameEngine {
       return;
     }
 
-    // Check round end
+    // Check if current phase threats are all fired
     if (allThreatsFired(s)) {
-      if (s.isBoss) {
-        s.phase = GamePhase.VICTORY;
-        s.log.push("승리! 보스를 물리쳤습니다!");
+      const roundIdx = s.isBoss ? s.threatSchedule.length - 1 : s.runRound - 1;
+      const totalPhases = getTotalPhases(s, roundIdx);
+
+      if (s.currentPhase + 1 >= totalPhases) {
+        // All phases complete — check for harvestable plants
+        if (this.hasHarvestablePlants()) {
+          s.waitingForManualRoundEnd = true;
+          s.log.push("수확 가능한 야채가 있습니다! 수확 후 라운드를 종료하세요.");
+          this.render();
+          return;
+        }
+
+        // Round end
+        if (s.isBoss) {
+          s.phase = GamePhase.VICTORY;
+          s.log.push("승리! 보스를 물리쳤습니다!");
+          this.render();
+          return;
+        }
+        s.phase = GamePhase.ROUND_END;
+        s.log.push("라운드 종료!");
+        this.initRoundRewards();
         this.render();
         return;
       }
-      s.phase = GamePhase.ROUND_END;
-      s.log.push("라운드 종료!");
-      this.initRoundRewards();
-      this.render();
+
+      // Advance to next phase
+      advancePhase(s, roundIdx);
+      this.startTurn();
       return;
     }
 
     // Next turn
     this.startTurn();
+  }
+
+  confirmRoundEnd(): void {
+    const s = this.state;
+    if (!s.waitingForManualRoundEnd) return;
+
+    s.waitingForManualRoundEnd = false;
+
+    if (s.isBoss) {
+      s.phase = GamePhase.VICTORY;
+      s.log.push("승리! 보스를 물리쳤습니다!");
+      this.render();
+      return;
+    }
+
+    s.phase = GamePhase.ROUND_END;
+    s.log.push("라운드 종료!");
+    this.initRoundRewards();
+    this.render();
+  }
+
+  private hasHarvestablePlants(): boolean {
+    for (const row of this.state.grid) {
+      for (const cell of row) {
+        if (cell.plant && cell.plant.growthStack >= cell.plant.fullStack) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   // --- Rewards ---
@@ -413,13 +471,31 @@ function loadCustomThreats(): RoundThreats[] | null {
     const saved = localStorage.getItem("vegialter_custom_threats");
     if (!saved) return null;
     const parsed = JSON.parse(saved);
-    // Validate that data uses appearOnTurn format; discard legacy timer-based data
+
+    // Check if already in phases format
+    if (parsed[0]?.phases) {
+      return parsed.map((r: any) => ({ phases: r.phases }));
+    }
+
+    // Migrate from old appearOnTurn format
     const first = parsed[0]?.threats?.[0];
     if (first && !("appearOnTurn" in first)) {
       localStorage.removeItem("vegialter_custom_threats");
       return null;
     }
-    return parsed.map((r: any) => ({ threats: r.threats }));
+
+    // Convert old format: group by appearOnTurn into phases
+    return parsed.map((r: any) => {
+      const phaseMap = new Map<number, { hurdle: number; sequence: any[] }[]>();
+      for (const t of r.threats) {
+        const turn = t.appearOnTurn ?? 1;
+        if (!phaseMap.has(turn)) phaseMap.set(turn, []);
+        phaseMap.get(turn)!.push({ hurdle: t.hurdle, sequence: t.sequence });
+      }
+      const sortedKeys = [...phaseMap.keys()].sort((a, b) => a - b);
+      const phases = sortedKeys.map(k => phaseMap.get(k)!);
+      return { phases };
+    });
   } catch {
     return null;
   }

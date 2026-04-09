@@ -299,6 +299,10 @@ function addPreviewToCell(row: number, col: number, text: string, isEffect = fal
 function clearDragPreview(): void {
   app.querySelectorAll(".drag-preview").forEach((el) => el.remove());
   app.querySelectorAll(".cell--drag-over").forEach((el) => el.classList.remove("cell--drag-over"));
+  app.querySelectorAll(".cell--transplant-swap").forEach((el) => el.classList.remove("cell--transplant-swap"));
+  app.querySelectorAll("[class*='cell--swap-']").forEach((el) => {
+    el.classList.remove("cell--swap-top", "cell--swap-bottom", "cell--swap-left", "cell--swap-right");
+  });
 }
 
 function clearDragUI(): void {

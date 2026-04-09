@@ -244,8 +244,15 @@ function isDragValidTarget(row: number, col: number, def: CardDef): boolean {
   if (def.type === CardType.VEGETABLE) return cell.plant === null;
   if (def.type === CardType.WATERING) return cell.plant !== null;
   if (def.type === CardType.TRANSPLANT) {
-    if (s.transplantSourceCell === null) return cell.plant !== null;
-    return cell.plant === null;
+    if (cell.plant) return true;
+    const offsets: [number, number][] = [[-1,0],[1,0],[0,-1],[0,1]];
+    for (const [dr, dc] of offsets) {
+      const r = row + dr, c = col + dc;
+      if (r >= 0 && r < s.gridRows && c >= 0 && c < s.gridCols) {
+        if (s.grid[r][c].plant) return true;
+      }
+    }
+    return false;
   }
   if (def.toolEffect === ToolEffect.WATERING_CAN) return true;
   return false;

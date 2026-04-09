@@ -175,7 +175,7 @@ body {
   background: #16213e;
   border-radius: 8px;
   margin-bottom: 12px;
-  overflow-x: auto;
+  overflow: visible;
   justify-content: center;
   flex-wrap: wrap;
 }

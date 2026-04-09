@@ -7,30 +7,61 @@ export function placeThreatsForRound(state: GameState, roundIndex: number): void
     : state.threatSchedule[roundIndex];
   if (!schedule) return;
 
-  // Collect all cell positions
-  const positions: [number, number][] = [];
-  for (let r = 0; r < state.gridRows; r++) {
-    for (let c = 0; c < state.gridCols; c++) {
-      positions.push([r, c]);
-    }
-  }
-  const shuffled = shuffle(positions);
-
   let maxTimer = 0;
-  for (let i = 0; i < schedule.threats.length; i++) {
-    const t = schedule.threats[i];
-    const [row, col] = shuffled[i % shuffled.length];
-    const threat: Threat = {
-      id: state.nextThreatId++,
-      timer: t.timer,
+  state.pendingThreats = [];
+
+  for (const t of schedule.threats) {
+    const appearOnTurn = Math.max(1, t.timer - 2);
+    const placedTimer = Math.min(3, t.timer);
+    state.pendingThreats.push({
+      timer: placedTimer,
       hurdle: t.hurdle,
       sequence: [...t.sequence],
-      fired: false,
-    };
-    state.grid[row][col].threats.push(threat);
+      appearOnTurn,
+    });
     if (t.timer > maxTimer) maxTimer = t.timer;
   }
   state.maxTimerThisRound = maxTimer;
+}
+
+export function placePendingThreats(state: GameState): void {
+  const toPlace = [];
+  const remaining = [];
+
+  for (const pt of state.pendingThreats) {
+    if (pt.appearOnTurn <= state.turnInRound) {
+      toPlace.push(pt);
+    } else {
+      remaining.push(pt);
+    }
+  }
+  state.pendingThreats = remaining;
+  if (toPlace.length === 0) return;
+
+  // Find cells without unfired threats
+  const available: [number, number][] = [];
+  for (let r = 0; r < state.gridRows; r++) {
+    for (let c = 0; c < state.gridCols; c++) {
+      if (!state.grid[r][c].threats.some(t => !t.fired)) {
+        available.push([r, c]);
+      }
+    }
+  }
+  if (available.length === 0) return; // all cells full — drop threats
+
+  const shuffled = shuffle(available);
+  for (let i = 0; i < toPlace.length; i++) {
+    if (i >= shuffled.length) break;
+    const pt = toPlace[i];
+    const [row, col] = shuffled[i];
+    state.grid[row][col].threats.push({
+      id: state.nextThreatId++,
+      timer: pt.timer,
+      hurdle: pt.hurdle,
+      sequence: [...pt.sequence],
+      fired: false,
+    });
+  }
 }
 
 export function tickThreats(state: GameState): void {

@@ -180,6 +180,29 @@ function bindEvents(): void {
     engine.endTurn();
   });
 
+  // Rewards
+  app.querySelector("[data-reward='gold']")?.addEventListener("click", () => {
+    engine.claimRewardGold();
+  });
+  app.querySelector("[data-reward='card']")?.addEventListener("click", () => {
+    engine.openRewardCard();
+  });
+  app.querySelectorAll<HTMLElement>("[data-reward-card]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+      engine.claimRewardCard(el.dataset.rewardCard!);
+    });
+  });
+  app.querySelector("[data-reward='expand']")?.addEventListener("click", () => {
+    engine.openRewardExpand();
+  });
+  app.querySelectorAll<HTMLElement>("[data-reward-expand]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+      engine.claimRewardExpand(el.dataset.rewardExpand as "top" | "bottom" | "left" | "right");
+    });
+  });
+
   // Enter shop
   document.getElementById("btn-enter-shop")?.addEventListener("click", () => {
     engine.enterShop();

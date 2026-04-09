@@ -274,14 +274,6 @@ function showDragPreview(row: number, col: number, def: CardDef): void {
     addPreviewToCell(row, col, def.emoji);
   } else if (def.type === CardType.WATERING) {
     addPreviewToCell(row, col, "성장+1", true);
-  } else if (def.type === CardType.TRANSPLANT) {
-    if (engine.state.transplantSourceCell === null) {
-      addPreviewToCell(row, col, "📌");
-    } else {
-      const src = engine.state.transplantSourceCell;
-      const srcPlant = engine.state.grid[src.row][src.col].plant;
-      if (srcPlant) addPreviewToCell(row, col, CARD_DEFS[srcPlant.defId].emoji);
-    }
   } else if (def.toolEffect === ToolEffect.WATERING_CAN) {
     const offsets: [number, number][] = [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]];
     for (const [dr, dc] of offsets) {

@@ -52,3 +52,12 @@ export function renderShop(state: GameState): string {
   html += `</div>`;
   return html;
 }
+
+function getShopTooltip(item: { type: ShopItemType; cardDefId?: string }): string {
+  if (item.type === ShopItemType.CARD && item.cardDefId) {
+    return CARD_DEFS[item.cardDefId]?.description || "";
+  }
+  if (item.type === ShopItemType.EXPAND) return "밭 크기를 1줄 확장";
+  if (item.type === ShopItemType.HEAL) return "농부 HP를 1 회복";
+  return "";
+}

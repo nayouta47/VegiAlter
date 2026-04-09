@@ -5,8 +5,9 @@ import { renderHand } from "./HandView";
 import { renderLog } from "./LogView";
 import { renderShop } from "./ShopView";
 import { renderRewards } from "./RewardView";
+import { renderCodex } from "./CodexView";
 
-export function render(state: GameState, container: HTMLElement): void {
+export function render(state: GameState, container: HTMLElement, codexOpen = false): void {
   let html = "";
 
   html += renderHud(state);
